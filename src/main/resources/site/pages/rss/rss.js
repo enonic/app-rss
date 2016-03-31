@@ -1,23 +1,25 @@
 var libs = {
 	portal: require('/lib/xp/portal'),
+	content: require('/lib/xp/content'),
 	xslt: require('/lib/xp/xslt'),
 	util: require('/lib/enonic/util')
 };
 
 exports.get = function(req) {
 
-    var content = portal.getContent();
-    var site = portal.getSite();
+    var content = libs.portal.getContent();
+    var site = libs.portal.getSite();
     //var folderPath = util.postsFolder();
+	 var folderPath = site._path;
 
-    var pageUrl = portal.pageUrl({
+    var pageUrl = libs.portal.pageUrl({
         path: content._path
     });
 
     var result = libs.content.query({
         start: 0,
         count: 20,
-        query: '_parentPath="/content' + folderPath + '" AND data.hideOnFrontpage != "true"',
+        query: '_parentPath="/content' + folderPath + '"',
         sort: 'data.datePublished DESC, createdTime DESC',
         contentTypes: [
             app.name + ':post'
@@ -98,7 +100,7 @@ exports.get = function(req) {
     var view = resolve('rss.xsl');
     //var copy = resolve('copy-of.xsl');
 
-    var body = xslt.render(view, params);
+    var body = libs.xslt.render(view, params);
 
     return {
         contentType: 'text/xml',
