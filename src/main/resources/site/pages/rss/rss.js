@@ -16,15 +16,20 @@ exports.get = function(req) {
         path: content._path
     });
 
+	 log.info(folderPath);
+	 log.info(content.data.contenttype);
+
     var result = libs.content.query({
         start: 0,
         count: 20,
-        query: '_parentPath="/content' + folderPath + '"',
-        sort: 'data.datePublished DESC, createdTime DESC',
+        query: '_parentPath="/content' + folderPath + '/*"',
+        sort: 'createdTime DESC',
         contentTypes: [
-            app.name + ':post'
+            content.data.contenttype
         ]
     });
+
+	 libs.util.log(result);
 
     var posts = result.hits;
 
@@ -57,7 +62,6 @@ exports.get = function(req) {
         var author = libs.util.content.get(posts[i].data.author);
         posts[i].data.authorName = author.data.name;
         posts[i].data.tags = libs.util.data.forceArray(posts[i].data.tags);
-
         posts[i].data.category = libs.util.data.forceArray(posts[i].data.category);
         posts[i].data.categoryNames = [];
         posts[i].data.description = removeTags(posts[i].data.preface + ''); // .post earlier, before introducing preface field
@@ -75,18 +79,6 @@ exports.get = function(req) {
                 posts[i].data.categoryNames.push(libs.util.content.getProperty(posts[i].data.category[j], 'displayName'));
             }
         }
-/*
-        var comments = libs.content.query({
-            start: 0,
-            count: 1000,
-            query: "data.post = '" + posts[i]._id + "'",
-            sort: 'createdTime DESC',
-            contentTypes: [
-                app.name + ':comment'
-            ]
-        });
-*/
-//        posts[i].data.numComments = comments.total;
 
     }
 
