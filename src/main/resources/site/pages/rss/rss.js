@@ -1,21 +1,20 @@
-var stk = require('stk/stk');
-var util = require('utilities');
+var libs = {
+	portal: require('/lib/xp/portal'),
+	xslt: require('/lib/xp/xslt'),
+	util: require('/lib/enonic/util')
+};
 
-var contentLib = require('/lib/xp/content');
-var portal = require('/lib/xp/portal');
-var xslt = require('/lib/xp/xslt');
-
-exports.get = function (req) {
+exports.get = function(req) {
 
     var content = portal.getContent();
     var site = portal.getSite();
-    var folderPath = util.postsFolder();
+    //var folderPath = util.postsFolder();
 
     var pageUrl = portal.pageUrl({
         path: content._path
     });
 
-    var result = contentLib.query({
+    var result = libs.content.query({
         start: 0,
         count: 20,
         query: '_parentPath="/content' + folderPath + '" AND data.hideOnFrontpage != "true"',
@@ -53,11 +52,11 @@ exports.get = function (req) {
 
 
     for (var i = 0; i < posts.length; i++) {
-        var author = stk.content.get(posts[i].data.author);
+        var author = libs.util.content.get(posts[i].data.author);
         posts[i].data.authorName = author.data.name;
-        posts[i].data.tags = stk.data.forceArray(posts[i].data.tags);
+        posts[i].data.tags = libs.util.data.forceArray(posts[i].data.tags);
 
-        posts[i].data.category = stk.data.forceArray(posts[i].data.category);
+        posts[i].data.category = libs.util.data.forceArray(posts[i].data.category);
         posts[i].data.categoryNames = [];
         posts[i].data.description = removeTags(posts[i].data.preface + ''); // .post earlier, before introducing preface field
 
@@ -71,11 +70,11 @@ exports.get = function (req) {
 
         if (posts[i].data.category) {
             for (var j = 0; j < posts[i].data.category.length; j++) {
-                posts[i].data.categoryNames.push(stk.content.getProperty(posts[i].data.category[j], 'displayName'));
+                posts[i].data.categoryNames.push(libs.util.content.getProperty(posts[i].data.category[j], 'displayName'));
             }
         }
 /*
-        var comments = contentLib.query({
+        var comments = libs.content.query({
             start: 0,
             count: 1000,
             query: "data.post = '" + posts[i]._id + "'",
