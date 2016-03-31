@@ -10,8 +10,6 @@
                 exclude-result-prefixes="portal xs">
 
   <xsl:output method="xml" omit-xml-declaration="no" indent="yes"/>
-  <!--<xsl:output method="xml" omit-xml-declaration="no" cdata-section-elements="{http://purl.org/dc/elements/1.1/}creator category description {http://purl.org/rss/1.0/modules/content/}encoded" />-->
-
 
   <xsl:variable name="date-format-string" select="'[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01]'"/>
   <xsl:variable name="lastBuild" select="/root/posts/item[1]/modifiedTime"/>
@@ -80,12 +78,6 @@
           disable-output-escaping="yes">]]&gt;</xsl:text>
       </content:encoded>
 
-      <!--<wfw:commentRss></wfw:commentRss>-->
-<!--
-      <slash:comments>
-        <xsl:value-of select="data/numComments"/>
-      </slash:comments>
--->
     </item>
   </xsl:template>
 
