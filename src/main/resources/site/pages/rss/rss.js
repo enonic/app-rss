@@ -9,15 +9,12 @@ exports.get = function(req) {
 
     var content = libs.portal.getContent();
     var site = libs.portal.getSite();
-    //var folderPath = util.postsFolder();
-	 var folderPath = site._path;
+
+	 var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
 
     var pageUrl = libs.portal.pageUrl({
         path: content._path
     });
-
-	 log.info(folderPath);
-	 log.info(content.data.contenttype);
 
     var result = libs.content.query({
         start: 0,

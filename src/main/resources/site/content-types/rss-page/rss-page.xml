@@ -19,8 +19,18 @@
 		  <!-- Add author name? (needs field name setting for related contenttype)-->
 		  <!-- How about categories? -->
 		  <!-- Field mappings: description/preface, content, publishdate, author -->
+		  <!-- Lang? Or auto-detect -->
       </items>
     </field-set>
+    <field-set name="basic">
+       <label>Field mappings (json-paths with items[i] as root)</label>
+       <items>
+         <input type="TextLine" name="title">
+           <label>Description/excerpt</label>
+           <occurrences minimum="0" maximum="1"/>
+         </input>
+       </items>
+     </field-set>
     <field-set name="overrides">
       <label>RSS customization</label>
       <items>
