@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mixin>
+	<display-name>SEO Metadata</display-name>
+	<items>
+		<input name="seoTitle" type="TextLine">
+			<label>Override "Title"</label>
+			<occurrences minimum="0" maximum="1"/>
+		</input>
+		<input name="seoDescription" type="TextArea">
+			<label>Override "Description"</label>
+			<occurrences minimum="0" maximum="1"/>
+		</input>
+		<input name="blockRobots" type="CheckBox">
+			<label>Hide from search engines?</label>
+			<occurrences minimum="0" maximum="1"/>
+		</input>
+	</items>
+</mixin>

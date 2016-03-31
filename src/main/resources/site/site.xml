@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+	<config>
+		<field-set name="defaults">
+			<label>Default settings</label>
+			<items>
+				<input name="seoTitle" type="TextLine">
+					<label>SEO Title</label>
+					<occurrences minimum="0" maximum="1"/>
+				</input>
+				<input name="seoDescription" type="TextArea">
+					<label>SEO Description</label>
+					<occurrences minimum="0" maximum="1"/>
+				</input>
+			</items>
+		</field-set>
+	</config>
+</site>
