@@ -18,6 +18,7 @@
 		  <!-- Hide full content setting? -->
 		  <!-- Add author name? (needs field name setting for related contenttype)-->
 		  <!-- How about categories? -->
+		  <!-- Field mappings: description/preface, content, publishdate, author -->
       </items>
     </field-set>
     <field-set name="overrides">

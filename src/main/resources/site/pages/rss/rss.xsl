@@ -12,7 +12,7 @@
   <xsl:output method="xml" omit-xml-declaration="no" indent="yes"/>
 
 
-  <xsl:variable name="date-format-string" select="'[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01]'"/>
+  <xsl:variable name="date-format-string" select="'[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01] +0200'"/>
   <xsl:variable name="lastBuild" select="/root/posts/item[1]/modifiedTime"/>
 
   <xsl:template match="/">

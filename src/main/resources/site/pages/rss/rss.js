@@ -22,7 +22,7 @@ exports.get = function(req) {
     var result = libs.content.query({
         start: 0,
         count: 20,
-		  query: '_parentPath="/content' + folderPath + '"',
+		  query: '_path LIKE "/content' + folderPath + '/*"',
         sort: 'createdTime DESC',
         contentTypes: [
             content.data.contenttype
