@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content-type>
+  <display-name>RSS page</display-name>
+  <content-display-name-script>$('title')</content-display-name-script>
+  <super-type>base:structured</super-type>
+  <form>
+    <field-set name="basic">
+      <label>RSS info</label>
+      <items>
+        <input type="TextLine" name="title">
+          <label>Title</label>
+          <occurrences minimum="1" maximum="1"/>
+        </input>
+        <input type="ComboBox" name="updatePeriod">
+          <label>SY Update period</label>
+          <occurrences minimum="0" maximum="1"/>
+          <config>
+            <option value="hourly">Hourly</option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </config>
+        </input>
+        <input type="TextLine" name="updateFrequency">
+          <label>SY Update frequency</label>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="ContentSelector" name="postsFolder">
+          <label>Category</label>
+          <occurrences minimum="0" maximum="0"/>
+          <config>
+            <relationship-type>system:reference</relationship-type>
+            <allow-content-type>base:folder</allow-content-type>
+          </config>
+        </input>
+      </items>
+    </field-set>
+  </form>
+</content-type>

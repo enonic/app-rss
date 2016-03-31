@@ -1,7 +1,7 @@
 var libs = {
     portal: require('/lib/xp/portal'),
     thymeleaf: require('/lib/xp/thymeleaf'),
-    util: require('/lib/enonic/util/util'),
+    util: require('/lib/enonic/util'),
     site: require('/lib/site')
 };
 
