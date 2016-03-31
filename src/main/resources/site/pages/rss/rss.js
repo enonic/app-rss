@@ -22,7 +22,7 @@ exports.get = function(req) {
     var result = libs.content.query({
         start: 0,
         count: 20,
-        query: '_parentPath="/content' + folderPath + '/*"',
+		  query: '_parentPath="/content' + folderPath + '"',
         sort: 'createdTime DESC',
         contentTypes: [
             content.data.contenttype
@@ -60,10 +60,10 @@ exports.get = function(req) {
 
     for (var i = 0; i < posts.length; i++) {
         var author = libs.util.content.get(posts[i].data.author);
-        posts[i].data.authorName = author.data.name;
-        posts[i].data.tags = libs.util.data.forceArray(posts[i].data.tags);
-        posts[i].data.category = libs.util.data.forceArray(posts[i].data.category);
-        posts[i].data.categoryNames = [];
+//        posts[i].data.authorName = author.data.name;
+//        posts[i].data.tags = libs.util.data.forceArray(posts[i].data.tags);
+//        posts[i].data.category = libs.util.data.forceArray(posts[i].data.category);
+//        posts[i].data.categoryNames = [];
         posts[i].data.description = removeTags(posts[i].data.preface + ''); // .post earlier, before introducing preface field
 
 			// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
@@ -73,13 +73,13 @@ exports.get = function(req) {
 				publishDate += ':08.965Z';
 			}
         posts[i].data.datePublished = publishDate || posts[i].createdTime;
-
+/*
         if (posts[i].data.category) {
             for (var j = 0; j < posts[i].data.category.length; j++) {
                 posts[i].data.categoryNames.push(libs.util.content.getProperty(posts[i].data.category[j], 'displayName'));
             }
         }
-
+*/
     }
 
     var params = {

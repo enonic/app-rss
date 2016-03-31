@@ -11,6 +11,7 @@
 
   <xsl:output method="xml" omit-xml-declaration="no" indent="yes"/>
 
+
   <xsl:variable name="date-format-string" select="'[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01]'"/>
   <xsl:variable name="lastBuild" select="/root/posts/item[1]/modifiedTime"/>
 
@@ -44,26 +45,23 @@
       <link>
         <xsl:value-of select="portal:pageUrl(concat('_path=', _path), '_type=absolute')"/>
       </link>
-      <comments>
-        <xsl:value-of select="concat(portal:pageUrl(concat('_path=', _path), '_type=absolute'),'#disqus_thread')"/>
-      </comments>
 
       <pubDate>
-        <xsl:value-of select="format-dateTime(xs:dateTime(data/datePublished), $date-format-string)"/>
-        <!--<xsl:value-of select="data/datePublished"/>-->
+        <xsl:value-of select="format-dateTime(xs:dateTime(createdTime), $date-format-string)"/>
       </pubDate>
-
+<!--
       <dc:creator>
         <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="data/authorName"/><xsl:text
           disable-output-escaping="yes"> ]]&gt;</xsl:text>
       </dc:creator>
-
+-->
+<!--
       <xsl:for-each select="data/tags/item | data/categoryNames/item">
         <category>
           <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="."/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text>
         </category>
       </xsl:for-each>
-
+-->
       <guid isPermaLink="false">
         <xsl:value-of select="portal:pageUrl(concat('_path=', _path), '_type=absolute')"/>
       </guid>
@@ -72,12 +70,12 @@
         <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/description"/><xsl:text
           disable-output-escaping="yes">]]&gt;</xsl:text>
       </description>
-
+<!--
       <content:encoded>
         <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/post" disable-output-escaping="yes"/><xsl:text
           disable-output-escaping="yes">]]&gt;</xsl:text>
       </content:encoded>
-
+-->
     </item>
   </xsl:template>
 
