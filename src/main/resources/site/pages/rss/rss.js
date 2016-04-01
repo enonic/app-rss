@@ -1,6 +1,6 @@
 var libs = {
-	portal: require('/lib/xp/portal'),
 	content: require('/lib/xp/content'),
+	portal: require('/lib/xp/portal'),
 	xslt: require('/lib/xp/xslt'),
 	util: require('/lib/enonic/util')
 };
@@ -87,7 +87,6 @@ exports.get = function(req) {
     };
 
     var view = resolve('rss.xsl');
-    //var copy = resolve('copy-of.xsl');
 
     var body = libs.xslt.render(view, params);
 
