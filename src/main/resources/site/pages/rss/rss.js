@@ -36,11 +36,12 @@ exports.get = function(req) {
 	var content = libs.portal.getContent();
 	var site = libs.portal.getSite();
 
+	// Find any settings for
 	var settings = {
-		title: [] + content.data.mapTitle || ['title','displayName'],
-		summary: [] + content.data.mapSummary || ['preface','description','summary'],
-		date: [] + content.data.mapDate || ['publishDate','createdTime'],
-		body: [] + content.data.mapBody || ['body','html','text']
+		title: content.data.mapTitle || ['title','displayName'],
+		summary: content.data.mapSummary || ['preface','description','summary'],
+		date: content.data.mapDate || ['publishDate','createdTime'],
+		body: content.data.mapBody || ['body','html','text']
 	};
 
 	libs.util.log(settings);
@@ -61,7 +62,7 @@ exports.get = function(req) {
         ]
     });
 
-	 libs.util.log(result);
+//	 libs.util.log(result);
 
     var posts = result.hits;
 
@@ -89,22 +90,33 @@ exports.get = function(req) {
         return html.replace(/</g, '&lt;');
     }
 
-
-    for (var i = 0; i < posts.length; i++) {
-        var author = libs.util.content.get(posts[i].data.author);
+	for (var i = 0; i < posts.length; i++) {
+//        var author = libs.util.content.get(posts[i].data.author);
 //        posts[i].data.authorName = author.data.name;
 //        posts[i].data.tags = libs.util.data.forceArray(posts[i].data.tags);
 //        posts[i].data.category = libs.util.data.forceArray(posts[i].data.category);
 //        posts[i].data.categoryNames = [];
-        posts[i].data.description = removeTags(posts[i].data.preface + ''); // .post earlier, before introducing preface field
 
-			// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
-			// So we need to do it the hacky way
-			var publishDate = posts[i].data.datePublished;
-			if (publishDate) {
-				publishDate += ':08.965Z';
-			}
-        posts[i].data.datePublished = publishDate || posts[i].createdTime;
+		settings.title = findValueInJson(settings.title);
+		settings.summary = findValueInJson(settings.summary);
+		settings.date = findValueInJson(settings.date);
+		settings.body = findValueInJson(settings.body);
+
+		// TODO: Collect json data from content data ... how?
+		// TODO: Store this data in the object sent back to the XML
+		// TODO: Handle no/missing data? Just sent empty?
+
+		posts[i].data.description = removeTags(posts[i].data.preface + ''); // .post earlier, before introducing preface field
+
+		// TODO: Handle with and without timezone in this field!
+
+		// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
+		// So we need to do it the hacky way
+		var publishDate = posts[i].data.datePublished;
+		if (publishDate) {
+			publishDate += ':08.965Z';
+		}
+		posts[i].data.datePublished = publishDate || posts[i].createdTime;
 /*
         if (posts[i].data.category) {
             for (var j = 0; j < posts[i].data.category.length; j++) {
@@ -112,7 +124,10 @@ exports.get = function(req) {
             }
         }
 */
-    }
+		// TODO: Fallback to master settings for updatePeriod if not overwritten
+		// TODO: Fallback to master settings for updateFrequency if not overwritten
+	}
+
 
     var params = {
         content: content,
