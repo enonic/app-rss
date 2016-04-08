@@ -24,19 +24,19 @@
     <field-set name="mappings">
       <label>RSS mappings</label>
       <items>
-        <input type="TextLine" name="map-title">
+        <input type="TextLine" name="mapTitle">
           <label>Title field</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
-        <input type="TextLine" name="map-summary">
+        <input type="TextLine" name="mapSummary">
           <label>Summary field</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
-        <input type="TextLine" name="map-date">
+        <input type="TextLine" name="mapDate">
           <label>DateTime field</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
-        <input type="TextLine" name="map-body">
+        <input type="TextLine" name="mapBody">
           <label>Full body field</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
