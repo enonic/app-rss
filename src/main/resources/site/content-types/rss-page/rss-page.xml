@@ -4,7 +4,7 @@
   <content-display-name-script>$('title')</content-display-name-script>
   <super-type>base:structured</super-type>
   <form>
-    <field-set name="basic">
+    <field-set name="settings">
       <label>RSS settings</label>
       <items>
         <input type="TextLine" name="title">
@@ -22,14 +22,14 @@
       </items>
     </field-set>
     <field-set name="mappings">
-      <label>RSS mappings</label>
+      <label>RSS mappings (json-paths with items[i] as root)</label>
       <items>
         <input type="TextLine" name="mapTitle">
           <label>Title field</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="mapSummary">
-          <label>Summary field</label>
+          <label>Description/excerpt field</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="mapDate">
@@ -42,15 +42,6 @@
         </input>
       </items>
     </field-set>
-    <field-set name="basic">
-       <label>Field mappings (json-paths with items[i] as root)</label>
-       <items>
-         <input type="TextLine" name="title">
-           <label>Description/excerpt</label>
-           <occurrences minimum="0" maximum="1"/>
-         </input>
-       </items>
-     </field-set>
     <field-set name="overrides">
       <label>RSS customization</label>
       <items>
