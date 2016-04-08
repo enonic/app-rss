@@ -7,8 +7,15 @@ var libs = {
 
 exports.get = function(req) {
 
-    var content = libs.portal.getContent();
-    var site = libs.portal.getSite();
+	var content = libs.portal.getContent();
+	var site = libs.portal.getSite();
+
+	var settings = {
+		title: content.data.mapTitle,
+		summary: content.data.mapSummary,
+		date: content.data.mapDate,
+		body: content.data.mapBody
+	};
 
 	 var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
 
