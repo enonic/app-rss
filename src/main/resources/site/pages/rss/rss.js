@@ -5,17 +5,45 @@ var libs = {
 	util: require('/lib/enonic/util')
 };
 
+/*
+function commaStringToArray(str) {
+	var commas = str || '';
+	var arr = commas.split(',');
+	if (arr) {
+		arr.map(function(s) { return s.trim() });
+	}
+	return arr;
+}
+*/
+function findValueInJson(json, paths) {
+	var value = null;
+	var pathLength = paths.length;
+	var jsonPath = ";"
+	for (var i = 0; i < pathLength; i++) {
+		if ( paths[i] ) {
+			jsonPath = 'json.data["' + paths[i] + '"]'; // Wrap property so we can have dashes in it
+			if ( eval(jsonPath) ) {
+				value = eval(jsonPath);
+				break; // Expect the first property in the string is the most important one to use
+			}
+		}
+	}
+	return value;
+}
+
 exports.get = function(req) {
 
 	var content = libs.portal.getContent();
 	var site = libs.portal.getSite();
 
 	var settings = {
-		title: content.data.mapTitle,
-		summary: content.data.mapSummary,
-		date: content.data.mapDate,
-		body: content.data.mapBody
+		title: [] + content.data.mapTitle || ['title','displayName'],
+		summary: [] + content.data.mapSummary || ['preface','description','summary'],
+		date: [] + content.data.mapDate || ['publishDate','createdTime'],
+		body: [] + content.data.mapBody || ['body','html','text']
 	};
+
+	libs.util.log(settings);
 
 	 var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
 
