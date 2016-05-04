@@ -1,16 +1,20 @@
-# RSS app for Enonic XP version 6
+# RSS app
 
-This Enonic XP application adds RSS capabilities to your [Enonic XP](https://github.com/enonic/xp) site.
+This Enonic XP 6 application adds RSS capabilities to your [Enonic XP](https://github.com/enonic/xp) site.
 
-The App adds one content type and one page controller for this to work.
+The App adds:
+* one content type
+* one page controller
 
 ## Building and deploying
-<!--
-There are two options. One is to simply download the app [JAR file](http://repo.enonic.com/public/com/enonic/app/rss/1.0.0/rss-1.0.0.jar) and move it to the XP installation's `$XP_HOME/deploy` folder.
--->
+
+There are three options. One is to simply download the app [JAR file](http://repo.enonic.com/public/com/enonic/app/rss/0.9.0/rss-0.9.0.jar) and move it to the XP installation's `$XP_HOME/deploy` folder.
+
 Or you can build this app with gradle. First, download the zip file of this repo. Unpack it locally. In the terminal, from the root of the project, type `./gradlew build`. On Windows, just type `gradlew build`. Next, move the JAR file from `build/libs` to your `$XP_HOME/deploy` directory. This app will now be available to add to your websites through the Content Studio admin tool in Enonic XP.
 
 If you are upgrading to a newer version of this app, make sure to remove the old version's JAR file from the `$XP_HOME/deploy` directory.
+
+Last option is to just visit the Enonic Market in the Application admin tool and install it!
 
 ## How to use this app
 
@@ -24,11 +28,10 @@ If you are upgrading to a newer version of this app, make sure to remove the old
 
 | Version        | XP version |
 | ------------- | ------------- |
-| 1.0.0-SNAPSHOT | 6.5.0 |
+| 0.9.0 | 6.5.0 |
 
 ## Changelog
 
-### Version 1.0.0-SNAPSHOT
+### Version 0.9.0
 
-* Work in progress
-* Basic support, missing tweaks and minor functionality
+App works, but work in progress. Missing some tweaks and minor functionality, and documentation.
