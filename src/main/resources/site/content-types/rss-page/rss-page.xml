@@ -15,10 +15,17 @@
           <label>ContentType to populate feed with (including full app-name)</label>
           <occurrences minimum="1" maximum="1"/>
         </input>
+        <input type="TextLine" name="language">
+           <label>Language (en-US is default)</label>
+           <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="exclude">
+           <label>Paths to exclude ($site/[THIS]/*)</label>
+           <occurrences minimum="0" maximum="0"/>
+        </input>
 		  <!-- TODO: Hide full content setting? -->
 		  <!-- TODO: Add author name? (needs field name setting for related contenttype)-->
 		  <!-- TODO: How about categories? -->
-		  <!-- TODO: ang? Or auto-detect -->
       </items>
     </field-set>
     <field-set name="mappings">

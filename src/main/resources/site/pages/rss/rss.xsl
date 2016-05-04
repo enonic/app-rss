@@ -25,7 +25,7 @@
         </link>
         <description><xsl:value-of select="/root/site/data/description"/></description>
         <lastBuildDate><xsl:value-of select="format-dateTime(xs:dateTime($lastBuild), $date-format-string)"/></lastBuildDate>
-        <language>en-US</language>
+        <language><xsl:value-of select="/root/content/data/language"/></language>
         <xsl:if test="/root/content/data/updatePeriod and /root/content/data/updateFrequency">
           <sy:updatePeriod><xsl:value-of select="/root/content/data/updatePeriod"/></sy:updatePeriod>
           <sy:updateFrequency><xsl:value-of select="/root/content/data/updateFrequency"/></sy:updateFrequency>
