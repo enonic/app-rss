@@ -143,7 +143,7 @@ exports.get = function(req) {
 
 		// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
 		// So we need to do it the hacky way
-		// TODO: Handle with and without timezone much better!
+		// TODO: Handle with and without timezone much better! This will NOT work on data stored with timezone ... =/
 		var publishDate = itemData.date;
 		if (publishDate) {
 			publishDate += ':08.965Z';
