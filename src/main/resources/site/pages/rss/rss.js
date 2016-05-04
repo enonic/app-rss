@@ -75,12 +75,18 @@ exports.get = function(req) {
 		}
 	}
 
+	var searchDate = content.data.mapDate || 'data.publishDate';
+	searchDate = searchDate.replace("[", ".[");
+	searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
+
+//	log.info(searchDate);
+
 	var result = libs.content.query({
 		start: 0,
 		count: 20, // TODO: Make this a setting in the content type!
 		query: query,
 		//query: '_path LIKE "/content' + folderPath + '/*" AND (language = "" OR language LIKE "' + content.data.language + '*")',
-		sort: 'createdTime DESC', // TODO: Sort this on the setting for publishdate instead
+		sort: searchDate + ' DESC, createdTime DESC',
 		contentTypes: [
 			content.data.contenttype
 		]
