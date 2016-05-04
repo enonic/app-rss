@@ -88,7 +88,7 @@ exports.get = function(req) {
 		//query: '_path LIKE "/content' + folderPath + '/*" AND (language = "" OR language LIKE "' + content.data.language + '*")',
 		sort: searchDate + ' DESC, createdTime DESC',
 		contentTypes: [
-			content.data.contenttype
+			content.data.contenttype // TODO: Handle multiple contenttypes in the same query? However, field mappings gets very complicated
 		]
 	});
 
