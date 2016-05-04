@@ -62,6 +62,8 @@ exports.get = function(req) {
 */
 	var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
 
+	// TODO: Safeguard against "no content", like when setting up template
+
 	var pageUrl = libs.portal.pageUrl({
 		path: content._path
 	});
@@ -82,6 +84,8 @@ exports.get = function(req) {
 	searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
 
 //	log.info(searchDate);
+
+	// TODO: IMPORTANT! If no contenttype defined, don't search
 
 	var result = libs.content.query({
 		start: 0,
