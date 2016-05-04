@@ -5,6 +5,8 @@ var libs = {
 	util: require('/lib/enonic/util')
 };
 
+var view = resolve('rss.xsl');
+
 
 function commaStringToArray(str) {
 	if ( !str || str == '') return null;
@@ -76,7 +78,7 @@ exports.get = function(req) {
 	}
 
 	var searchDate = content.data.mapDate || 'data.publishDate';
-	searchDate = searchDate.replace("[", ".[");
+	searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
 	searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
 
 //	log.info(searchDate);
@@ -88,7 +90,7 @@ exports.get = function(req) {
 		//query: '_path LIKE "/content' + folderPath + '/*" AND (language = "" OR language LIKE "' + content.data.language + '*")',
 		sort: searchDate + ' DESC, createdTime DESC',
 		contentTypes: [
-			content.data.contenttype // TODO: Handle multiple contenttypes in the same query? However, field mappings gets very complicated
+			content.data.contenttype // NOTE TO SELF: Don't even think about making RSS support multiple content types, the field mapping would be insane!
 		]
 	});
 
@@ -124,11 +126,6 @@ exports.get = function(req) {
 	var postsLength = posts.length;
 
 	for (var i = 0; i < postsLength; i++) {
-//        var author = libs.util.content.get(posts[i].data.author);
-//        posts[i].data.authorName = author.data.name;
-//        posts[i].data.tags = libs.util.data.forceArray(posts[i].data.tags);
-//        posts[i].data.category = libs.util.data.forceArray(posts[i].data.category);
-//        posts[i].data.categoryNames = [];
 
 		itemData = {
 			title: findValueInJson(posts[i], settings.title),
@@ -140,20 +137,19 @@ exports.get = function(req) {
 		log.info("*** Read settings ***");
 		libs.util.log(itemData);
 */
-		// TODO: Handle no/missing data? Just sent empty?
+		// TODO: Handle no/missing data? Just send empty?
 
-		posts[i].data.description = removeTags(itemData.summary + ''); // .post earlier, before introducing preface field
-
-		// TODO: Handle with and without timezone in this field!
+		posts[i].data.description = removeTags(itemData.summary + '');
 
 		// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
 		// So we need to do it the hacky way
+		// TODO: Handle with and without timezone much better!
 		var publishDate = itemData.date;
 		if (publishDate) {
 			publishDate += ':08.965Z';
 		}
-		//posts[i].data.datePublished = publishDate || posts[i].createdTime;
 		posts[i].data.datePublished = itemData.date;
+
 
 		// TODO: Not in use ... should be setting to add or not?
 		//posts[i].data.post = itemData.body;
@@ -169,9 +165,8 @@ exports.get = function(req) {
 		site: site
 	};
 
-	var view = resolve('rss.xsl');
+	// Render
 	var body = libs.xslt.render(view, params);
-
 	return {
 		contentType: 'text/xml',
 		body: body
