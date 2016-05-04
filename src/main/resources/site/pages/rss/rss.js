@@ -5,8 +5,10 @@ var libs = {
 	util: require('/lib/enonic/util')
 };
 
-/*
+
 function commaStringToArray(str) {
+	if ( !str || str == '') return null;
+
 	var commas = str || '';
 	var arr = commas.split(',');
 	if (arr) {
@@ -14,17 +16,19 @@ function commaStringToArray(str) {
 	}
 	return arr;
 }
-*/
+
 function findValueInJson(json, paths) {
 	var value = null;
-	var pathLength = paths.length;
-	var jsonPath = ";"
-	for (var i = 0; i < pathLength; i++) {
-		if ( paths[i] ) {
-			jsonPath = 'json.data["' + paths[i] + '"]'; // Wrap property so we can have dashes in it
-			if ( eval(jsonPath) ) {
-				value = eval(jsonPath);
-				break; // Expect the first property in the string is the most important one to use
+	if (paths) {
+		var pathLength = paths.length;
+		var jsonPath = ";"
+		for (var i = 0; i < pathLength; i++) {
+			if ( paths[i] ) {
+				jsonPath = 'json.' + paths[i] + '';
+				if ( eval(jsonPath) ) {
+					value = eval(jsonPath);
+					break; // Expect the first property in the string is the most important one to use
+				}
 			}
 		}
 	}
@@ -35,15 +39,19 @@ exports.get = function(req) {
 
 	var content = libs.portal.getContent();
 	var site = libs.portal.getSite();
-
+/*
+	log.info("*** CONTENT ***");
+	libs.util.log(content);
+*/
 	// Find any settings for
 	var settings = {
-		title: content.data.mapTitle || ['title','displayName'],
-		summary: content.data.mapSummary || ['preface','description','summary'],
-		date: content.data.mapDate || ['publishDate','createdTime'],
-		body: content.data.mapBody || ['body','html','text']
+		title: commaStringToArray(content.data.mapTitle) || ['data.title','displayName'],
+		summary: commaStringToArray(content.data.mapSummary) || ['data.preface','data.description','data.summary'],
+		date: commaStringToArray(content.data.mapDate) || ['data.publishDate','createdTime'],
+		body: commaStringToArray(content.data.mapBody) || ['data.body','data.html','data.text']
 	};
 
+	log.info("*** SETTINGS ***");
 	libs.util.log(settings);
 
 	 var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
@@ -90,6 +98,8 @@ exports.get = function(req) {
         return html.replace(/</g, '&lt;');
     }
 
+	var itemData = {};
+
 	for (var i = 0; i < posts.length; i++) {
 //        var author = libs.util.content.get(posts[i].data.author);
 //        posts[i].data.authorName = author.data.name;
@@ -97,37 +107,34 @@ exports.get = function(req) {
 //        posts[i].data.category = libs.util.data.forceArray(posts[i].data.category);
 //        posts[i].data.categoryNames = [];
 
-		settings.title = findValueInJson(settings.title);
-		settings.summary = findValueInJson(settings.summary);
-		settings.date = findValueInJson(settings.date);
-		settings.body = findValueInJson(settings.body);
+		itemData = {
+			title: findValueInJson(posts[i], settings.title),
+			summary: findValueInJson(posts[i], settings.summary),
+			date: findValueInJson(posts[i], settings.date),
+			body: findValueInJson(posts[i], settings.body)
+		};
 
-		// TODO: Collect json data from content data ... how?
-		// TODO: Store this data in the object sent back to the XML
+		log.info("*** Read settings ***");
+		libs.util.log(itemData);
+
 		// TODO: Handle no/missing data? Just sent empty?
 
-		posts[i].data.description = removeTags(posts[i].data.preface + ''); // .post earlier, before introducing preface field
+		posts[i].data.description = removeTags(itemData.summary + ''); // .post earlier, before introducing preface field
 
 		// TODO: Handle with and without timezone in this field!
 
 		// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
 		// So we need to do it the hacky way
-		var publishDate = posts[i].data.datePublished;
+		var publishDate = itemData.date;
 		if (publishDate) {
 			publishDate += ':08.965Z';
 		}
-		posts[i].data.datePublished = publishDate || posts[i].createdTime;
-/*
-        if (posts[i].data.category) {
-            for (var j = 0; j < posts[i].data.category.length; j++) {
-                posts[i].data.categoryNames.push(libs.util.content.getProperty(posts[i].data.category[j], 'displayName'));
-            }
-        }
-*/
+		//posts[i].data.datePublished = publishDate || posts[i].createdTime;
+		posts[i].data.datePublished = itemData.date;
+
 		// TODO: Fallback to master settings for updatePeriod if not overwritten
 		// TODO: Fallback to master settings for updateFrequency if not overwritten
 	}
-
 
     var params = {
         content: content,
@@ -137,7 +144,6 @@ exports.get = function(req) {
     };
 
     var view = resolve('rss.xsl');
-
     var body = libs.xslt.render(view, params);
 
     return {
