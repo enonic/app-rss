@@ -1,8 +1,8 @@
 # RSS app for Enonic XP version 6
 
-This Enonic XP application adds XXX to your [Enonic XP](https://github.com/enonic/xp) site.
+This Enonic XP application adds RSS capabilities to your [Enonic XP](https://github.com/enonic/xp) site.
 
-XXX
+The App adds one content type and one page controller for this to work.
 
 ## Building and deploying
 <!--
