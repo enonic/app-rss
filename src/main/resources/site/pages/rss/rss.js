@@ -132,6 +132,9 @@ exports.get = function(req) {
 		//posts[i].data.datePublished = publishDate || posts[i].createdTime;
 		posts[i].data.datePublished = itemData.date;
 
+		// TODO: Not in use ... should be setting?
+		//posts[i].data.post = itemData.body;
+
 		// TODO: Fallback to master settings for updatePeriod if not overwritten
 		// TODO: Fallback to master settings for updateFrequency if not overwritten
 	}
