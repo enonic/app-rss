@@ -71,6 +71,16 @@ exports.get = function(req) {
 	// Exclude certain paths from the search, controlled from admin
 	var contentRoot = '/content' + folderPath + '/';
 	var query = '_path LIKE "' + contentRoot + '*"';
+
+	// Paths to include
+	if ( content.data.include ) {
+		content.data.include = libs.util.data.forceArray(content.data.include);
+		var includeLength = content.data.include.length;
+		for (var i = 0; i < includeLength; i++) {
+			query += ' AND _path LIKE "' + contentRoot + content.data.include[i] + '/*"';
+		}
+	}
+	// Paths to skip
 	if ( content.data.exclude ) {
 		content.data.exclude = libs.util.data.forceArray(content.data.exclude);
 		var excludeLength = content.data.exclude.length;
