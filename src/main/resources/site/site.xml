@@ -17,4 +17,7 @@
         <occurrences minimum="0" maximum="1"/>
       </input>
 	</config>
+	<filters>
+		<response-filter name="add-meta" order="80"/>
+	</filters>
 </site>
