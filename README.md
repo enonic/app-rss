@@ -28,9 +28,15 @@ Last option is to just visit the Enonic Market in the Application admin tool and
 
 | Version        | XP version |
 | ------------- | ------------- |
+| 0.10.0 | 6.5.0 |
 | 0.9.0 | 6.5.0 |
 
 ## Changelog
+
+### Version 0.10.0
+
+* Add correct meta tags to all page headers (html head) for each RSS feed on current site
+* Ability to add include-paths in settings of each RSS to filter search even further
 
 ### Version 0.9.0
 
