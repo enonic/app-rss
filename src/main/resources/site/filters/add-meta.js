@@ -9,19 +9,22 @@ var conf = {
 	view: resolve('add-meta.html')
 };
 
-
 exports.responseFilter = function(req, res) {
 
 	var site = libs.portal.getSite();
 
+	libs.util.log(site);
+
 	var result = libs.content.query({
 		start: 0,
 		count: 100,
-		query: "_path LIKE 'content" + site._path + "/*'",
+		query: "_path LIKE '/content" + site._path + "/*'",
 		contentTypes: [
 			app.name + ":rss-page"
 		]
 	});
+
+	libs.util.log(result);
 
 	var params = {
 		feeds: result.hits

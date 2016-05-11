@@ -1,5 +1,5 @@
 <div data-th-remove="tag">
 	<div data-th-each="feed : ${feeds}" data-th-remove="tag">
-<link rel="alternate" type="application/rss+xml" data-th-title="${feed.displayName}" data-th-href="${portal.pageUrl({'_id=' + feed._id}" />
+<link rel="alternate" type="application/rss+xml" data-th-title="${feed.displayName}" data-th-href="${portal.pageUrl({'_id=' + feed._id, '_type=absolute'})}" />
 	</div>
 </div>
