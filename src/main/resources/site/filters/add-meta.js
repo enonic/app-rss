@@ -10,11 +10,9 @@ var conf = {
 };
 
 exports.responseFilter = function(req, res) {
-
 	var site = libs.portal.getSite();
 
-	libs.util.log(site);
-
+	// Find all RSS feeds active on the current site
 	var result = libs.content.query({
 		start: 0,
 		count: 100,
@@ -24,14 +22,13 @@ exports.responseFilter = function(req, res) {
 		]
 	});
 
-	libs.util.log(result);
-
 	var params = {
 		feeds: result.hits
 	};
 
 	var metadata = libs.thymeleaf.render(conf.view, params);
 
+	// Add these to the site html head (can be picked up by browsers and other readers)
 	res.pageContributions.headEnd = libs.util.data.forceArray(res.pageContributions.headEnd);
 	res.pageContributions.headEnd.push(metadata);
 
