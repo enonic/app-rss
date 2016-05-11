@@ -1,7 +1,8 @@
 var libs = {
-    portal: require('/lib/xp/portal'),
-    thymeleaf: require('/lib/xp/thymeleaf'),
-    util: require('/lib/enonic/util')
+	portal: require('/lib/xp/portal'),
+	content: require('/lib/xp/content'),
+	thymeleaf: require('/lib/xp/thymeleaf'),
+	util: require('/lib/enonic/util')
 };
 
 var conf = {
@@ -10,14 +11,20 @@ var conf = {
 
 
 exports.responseFilter = function(req, res) {
-/*
-	var siteConfig = libs.portal.getSiteConfig();
-*/
+
+	var site = libs.portal.getSite();
+
+	var result = libs.content.query({
+		start: 0,
+		count: 100,
+		query: "_path LIKE 'content" + site._path + "/*'",
+		contentTypes: [
+			app.name + ":rss-page"
+		]
+	});
 
 	var params = {
-		title: pageTitle,
-		description: libs.site.getMetaDescription(content, site),
-		siteName: site.displayName
+		feeds: result.hits
 	};
 
 	var metadata = libs.thymeleaf.render(conf.view, params);

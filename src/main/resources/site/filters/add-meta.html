@@ -1,4 +1,5 @@
 <div data-th-remove="tag">
-<meta data-th-if="${blockRobots}" name="robots" content="noindex,nofollow" />
-<link rel="alternate" type="application/rss+xml" title="RSS Feed for petefreitag.com" href="/rss/" />
+	<div data-th-each="feed : ${feeds}" data-th-remove="tag">
+<link rel="alternate" type="application/rss+xml" data-th-title="${feed.displayName}" data-th-href="${portal.pageUrl({'_id=' + feed._id}" />
+	</div>
 </div>
