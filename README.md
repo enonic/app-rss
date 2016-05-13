@@ -27,7 +27,11 @@ Last option is to just visit the Enonic Market in the Application admin tool and
 4. Configure this content to map the content type you want to fetch
 5. Done, just add a link to this RSS content in a good place
 
-### Configuration - Important!
+### Page Template
+
+First you must create a Page Template supporting the new RSS content type and use the bundled page controller "RSS Page". After that you're good to go. Time to create our first feed!
+
+### Feed configuration - Important!
 
 Configuring this app is somewhat tricky the first time as it is powerful and dynamic enough to let you list any type of content inside your RSS-feeds. But read this carefully when setting up your first RSS.
 
