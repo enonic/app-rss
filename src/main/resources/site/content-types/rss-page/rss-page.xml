@@ -5,14 +5,14 @@
   <super-type>base:structured</super-type>
   <form>
     <field-set name="settings">
-      <label>RSS settings</label>
+      <label>Settings</label>
       <items>
         <input type="TextLine" name="title">
-          <label>Title</label>
+          <label>Name of feed</label>
           <occurrences minimum="1" maximum="1"/>
         </input>
-        <input type="TextLine" name="contenttype">
-          <label>ContentType to populate feed with (including full app-name)</label>
+        <input type="ContentTypeFilter" name="contenttype">
+          <label>ContentType to use</label>
           <occurrences minimum="1" maximum="1"/>
         </input>
         <input type="TextLine" name="language">
@@ -20,11 +20,11 @@
            <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="include">
-           <label>Paths to include ($site/[THIS]/*)</label>
+           <label>Paths to include</label>
            <occurrences minimum="0" maximum="0"/>
         </input>
         <input type="TextLine" name="exclude">
-           <label>Paths to exclude ($site/[THIS]/*)</label>
+           <label>Paths to exclude</label>
            <occurrences minimum="0" maximum="0"/>
         </input>
 		  <!-- TODO: Hide full content setting? -->
@@ -33,22 +33,22 @@
       </items>
     </field-set>
     <field-set name="mappings">
-      <label>RSS mappings (json-paths with items[i] as root)</label>
+      <label>Field mappings</label>
       <items>
         <input type="TextLine" name="mapTitle">
-          <label>Title field</label>
+          <label>Title</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="mapSummary">
-          <label>Description/excerpt field</label>
+          <label>Description/excerpt</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="mapDate">
-          <label>DateTime field</label>
+          <label>Publish date</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="mapBody">
-          <label>Full body field</label>
+          <label>Full body</label>
           <occurrences minimum="0" maximum="1"/>
         </input>
       </items>
