@@ -47,17 +47,17 @@ To make this all work you must map any fields from the content type you want a f
 
 We use a waterfall technique on fields to use so that if you use the most common field names in your content type then you don't need to set anything up. These are the automatic mappings, from left to right, that the app automatically checks for. If not in this list, add it as a string (like `data.name` or `data['publish-date']`) to map to your fields (it maps to the results.hits[i] json path from a query-search).
 
-**Title**: [Your setting], `data.title`, `displayName`
-**Description**: [Your setting], `data.preface`, `data.description`, `data.summary`
-**Publish date**: [Your setting], `data.publishDate`, `createdTime`
-**Full body**: [Your setting], `data.body`, `data.html`, `data.text`
+**Title**: [Your setting], `data.title`, `displayName`  
+**Description**: [Your setting], `data.preface`, `data.description`, `data.summary`  
+**Publish date**: [Your setting], `data.publishDate`, `createdTime`  
+**Full body**: [Your setting], `data.body`, `data.html`, `data.text`  
 
 * Remember to start with `data.` when mapping custom fields from your content type.
 * If your field name contains special characters, like `-`, then wrap the name correctly: `data.['My-super-field!']`
 
 ## Disclaimer
 
-App is not fully done yet. It works, but some extra features is needed, as well as increased usability.
+App is not fully done yet. It works, but some extra features is needed, as well as increased usability. Consider it a beta.
 
 ## Known issues
 
