@@ -40,7 +40,8 @@
   <xsl:template match="item">
     <item>
       <title>
-        <xsl:value-of select="displayName"/>
+        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="displayName"/><xsl:text
+          disable-output-escaping="yes">]]&gt;</xsl:text>
       </title>
       <link>
         <xsl:value-of select="portal:pageUrl(concat('_path=', _path), '_type=absolute')"/>
