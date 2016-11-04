@@ -83,6 +83,7 @@ App is not fully done yet. It works, but some extra features is needed, as well 
 ### Version 0.10.2
 
 * Upgrade to 6.7.3
+* Escape title output in XML
 
 ### Version 0.10.1
 
