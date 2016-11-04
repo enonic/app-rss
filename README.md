@@ -73,10 +73,13 @@ App is not fully done yet. It works, but some extra features is needed, as well 
 
 | Version        | XP version |
 | ------------- | ------------- |
-| 0.10.0 | 6.5.0 |
+| 0.10.2 | 6.7.3 |
 | 0.9.0 | 6.5.0 |
 
 ## Changelog
+### Version 0.10.2
+
+* Upgrade to 6.7
 
 ### Version 0.10.1
 
