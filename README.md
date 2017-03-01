@@ -9,23 +9,19 @@ The App adds:
 * one page controller (creates the XML)
 * a filter to insert RSS meta data
 
-## Building and deploying
+## Installation
 
-There are three options. One is to simply download the app [JAR file](http://repo.enonic.com/public/com/enonic/app/rss/0.10.1/rss-0.10.1.jar) and move it to the XP installation's `$XP_HOME/deploy` folder.
-
-Or you can build this app with gradle. First, download the zip file of this repo. Unpack it locally. In the terminal, from the root of the project, type `./gradlew build`. On Windows, just type `gradlew build`. Next, move the JAR file from `build/libs` to your `$XP_HOME/deploy` directory. This app will now be available to add to your websites through the Content Studio admin tool in Enonic XP.
-
-If you are upgrading to a newer version of this app, make sure to remove the old version's JAR file from the `$XP_HOME/deploy` directory.
-
-Last option is to just visit the Enonic Market in the Application admin tool and install it!
+Head to the [Enonic Market](https://market.enonic.com/vendors/enonic/com.enonic.app.rss) and read all about how to install this app. You have multiple choices.
 
 ## How to use this app
 
+After installing the app on your XP server, this is how you set it up to use it.
+
 1. Add App to any site
-2. Create a Page Template using the new RSS page controller, supporting new RSS content type
-3. Create a content of type RSS
+2. Create a Page Template using the new RSS page controller (support: this app's RSS content type)
+3. Create a new content of type RSS
 4. Configure this content to map the content type you want to fetch
-5. Done, just add a link to this RSS content in a good place
+5. Done
 
 ### Page Template
 
@@ -57,7 +53,7 @@ We use a waterfall technique on fields to use so that if you use the most common
 **Full body**: [Your setting], `data.body`, `data.html`, `data.text`  
 
 * Remember to start with `data.` when mapping custom fields from your content type.
-* If your field name contains special characters, like `-`, then wrap the name correctly: `data.['My-super-field!']`
+* If your field name contains special characters, like `-`, then wrap the name correctly: `data['My-super-field!']`
 
 ## Disclaimer
 
@@ -68,18 +64,25 @@ App is not fully done yet. It works, but some extra features is needed, as well 
 * DateTime fields using timezone can not be mapped
 * Settings for RSS "SY" is not used
 * "Full body" setting is not used, nor displayed in RSS feeds
+* Too easy to make app crash when not sufficient data is sent to it
 
 ## Releases and Compatibility
 
 | Version        | XP version |
 | ------------- | ------------- |
-| 0.10.3 | 6.9.1 |
+| 0.11.0 | 6.9.2 |
 | 0.10.2 | 6.7.3 |
 | 0.10.1 | 6.5.0 |
 | 0.10.0 | 6.5.0 |
 | 0.9.0 | 6.5.0 |
 
 ## Changelog
+
+### Version 0.11.0
+
+* Upgrade XP required to 6.9
+* Added support for displaying images for each feed item
+* Multiple minor fixes/adjustments/cleanups
 
 ### Version 0.10.2
 
