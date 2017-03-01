@@ -89,6 +89,9 @@ exports.get = function(req) {
 	searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
 	searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
 
+	log.info(searchDate);
+	log.info(query);
+
 	var result = libs.content.query({
 		start: 0,
 		count: 20,
@@ -135,7 +138,7 @@ exports.get = function(req) {
 			summary: findValueInJson(posts[i], settings.summary),
 			date: findValueInJson(posts[i], settings.date),
 			body: findValueInJson(posts[i], settings.body),
-			tumbnailId: findValueInJson(posts[i], settings.thumbnail)
+			thumbnailId: findValueInJson(posts[i], settings.thumbnail)
 		};
 
 		posts[i].data.description = itemData.summary ? removeTags(itemData.summary + '') : "";
@@ -148,9 +151,9 @@ exports.get = function(req) {
 		}
 		posts[i].data.datePublished = itemData.date;
 
-		if(itemData.tumbnailId){
+		if(itemData.thumbnailId){
 			var thumbnailContent = libs.content.get({
-				key: itemData.tumbnailId
+				key: itemData.thumbnailId
 			});
 			if(thumbnailContent){
 				var thumbnailAttachment = thumbnailContent.attachments[thumbnailContent.data.media.attachment];
@@ -159,7 +162,7 @@ exports.get = function(req) {
 					type: thumbnailAttachment.mimeType,
 					size: thumbnailAttachment.size,
 					url: libs.portal.imageUrl({
-						id: itemData.tumbnailId,
+						id: itemData.thumbnailId,
 						scale: "block(480,270)",
 						type: "absolute"
 					})
