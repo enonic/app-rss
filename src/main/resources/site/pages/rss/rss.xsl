@@ -16,6 +16,7 @@
   <xsl:variable name="lastBuild" select="/root/items[1]/modifiedTime"/>
 
   <xsl:template match="/">
+	  <!--<xsl:copy-of select="." />-->
     <rss version="2.0">
       <channel>
         <title><xsl:value-of select="/root/site/displayName"/></title>
@@ -30,12 +31,12 @@
         </xsl:if>
         <generator>Enonic XP</generator>
 
-        <xsl:apply-templates select="/root/items"/>
+        <xsl:apply-templates select="/root/items/item"/>
       </channel>
     </rss>
   </xsl:template>
 
-  <xsl:template match="item">
+  <xsl:template match="items/item">
     <item>
       <title>
         <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="title"/><xsl:text

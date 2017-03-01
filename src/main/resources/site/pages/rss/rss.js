@@ -16,6 +16,7 @@ function commaStringToArray(str) {
 	if (arr) {
 		arr.map(function(s) { return s.trim() });
 	}
+	//libs.util.log(arr);
 	return arr;
 }
 
@@ -30,10 +31,12 @@ function findValueInJson(json, paths) {
 			try {
 				if ( eval(jsonPath) ) {
 					value = eval(jsonPath);
+					//log.info(jsonPath);
+					//log.info(value);
 					if (value.trim() === "")
 						value = null; // Reset value if empty string (skip empties)
 					else
-						break; // Expect the first property in the string is the most important one to use
+						return value; // Expect the first property in the string is the most important one to use
 				}
 			} catch (e) {
 				log.error((e.cause ? e.cause.message : e.message));
@@ -190,7 +193,6 @@ exports.get = function(req) {
 		content: content,
 		items: feedItems
 	};
-	return;
 
 	// Render
 	var body = libs.xslt.render(view, params);
