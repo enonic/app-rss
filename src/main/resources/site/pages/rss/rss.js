@@ -46,12 +46,42 @@ function findValueInJson(json, paths) {
 	return value;
 }
 
+// Strip html from the description element
+function removeTags(html) {
+	var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
+	var tagOrComment = new RegExp(
+		'<(?:'
+			// Comment body.
+		+ '!--(?:(?:-*[^->])*--+|-?)'
+			// Special "raw text" elements whose content should be elided.
+		+ '|script\\b' + tagBody + '>[\\s\\S]*?</script\\s*'
+		+ '|style\\b' + tagBody + '>[\\s\\S]*?</style\\s*'
+			// Regular name
+		+ '|/?[a-z]'
+		+ tagBody
+		+ ')>',
+		'gi');
+	var oldHtml;
+	do {
+		oldHtml = html;
+		html = html.replace(tagOrComment, '');
+	} while (html !== oldHtml);
+	return html.replace(/</g, '&lt;');
+}
+
 exports.get = function(req) {
 
 	var site = libs.portal.getSite();
 	var content = libs.portal.getContent();
+	var rssFeed = {}; // General info about the feed
 
-	content.data.language = content.data.language || 'en-US';
+	rssFeed.title = content.displayName;
+	rssFeed.description = site.data.description;
+	rssFeed.language = content.data.language || 'en-US';
+	rssFeed.url = libs.portal.pageUrl({
+		path: content._path,
+		type: 'absolute'
+	});
 
 	// Find the settings for our RSS
 	var settings = {
@@ -61,11 +91,6 @@ exports.get = function(req) {
 		date: commaStringToArray(content.data.mapDate) || ['publish.from','data.publishDate','createdTime'],
 		body: commaStringToArray(content.data.mapBody) || ['data.body','data.html','data.text']
 	};
-
-	content.data.pageUrl = libs.portal.pageUrl({
-		path: content._path,
-		type: 'absolute'
-	});
 
 	// Setup for path filtering
 	var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
@@ -109,40 +134,13 @@ exports.get = function(req) {
 		]
 	});
 
-	var posts = result.hits;
-
-	// Strip html from the description element
-	var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
-	var tagOrComment = new RegExp(
-		'<(?:'
-			// Comment body.
-		+ '!--(?:(?:-*[^->])*--+|-?)'
-			// Special "raw text" elements whose content should be elided.
-		+ '|script\\b' + tagBody + '>[\\s\\S]*?</script\\s*'
-		+ '|style\\b' + tagBody + '>[\\s\\S]*?</style\\s*'
-			// Regular name
-		+ '|/?[a-z]'
-		+ tagBody
-		+ ')>',
-		'gi');
-
-	function removeTags(html) {
-		var oldHtml;
-		do {
-			oldHtml = html;
-			html = html.replace(tagOrComment, '');
-		} while (html !== oldHtml);
-		return html.replace(/</g, '&lt;');
-	}
-
-	var itemData = {};
-	var postsLength = posts.length;
 	var feedItems = [];
-	var feedItem = {};
+	var posts = result.hits;
+	var postsLength = posts.length;
 
 	for (var i = 0; i < postsLength; i++) {
-
-		itemData = {
+		var feedItem = {};
+		var itemData = {
 			title: findValueInJson(posts[i], settings.title),
 			summary: findValueInJson(posts[i], settings.summary),
 			date: findValueInJson(posts[i], settings.date),
@@ -151,6 +149,7 @@ exports.get = function(req) {
 		};
 
 		feedItem.title = itemData.title;
+		feedItem.modifiedTime = posts[i].modifiedTime;
 		feedItem.summary = itemData.summary ? removeTags(itemData.summary + '') : "";
 		feedItem.link = libs.portal.pageUrl({
 			path: posts[i]._path,
@@ -189,8 +188,7 @@ exports.get = function(req) {
 	libs.util.log(feedItems);
 
 	var params = {
-		site: site,
-		content: content,
+		feed: rssFeed,
 		items: feedItems
 	};
 

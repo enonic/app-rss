@@ -13,23 +13,23 @@
 
 
   <xsl:variable name="date-format-string" select="'[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01] +0200'"/>
-  <xsl:variable name="lastBuild" select="/root/items[1]/modifiedTime"/>
+  <xsl:variable name="lastBuild" select="/root/items/item[1]/modifiedTime"/>
 
   <xsl:template match="/">
 	  <!--<xsl:copy-of select="." />-->
     <rss version="2.0">
       <channel>
-        <title><xsl:value-of select="/root/site/displayName"/></title>
-        <atom:link href="{/root/content/pageUrl}" rel="self" type="application/rss+xml"/>
-        <link><xsl:value-of select="/root/content/pageUrl"/></link>
-        <description><xsl:value-of select="/root/site/data/description"/></description>
+        <title><xsl:value-of select="/root/feed/title"/></title>
+        <atom:link href="{/root/feed/url}" rel="self" type="application/rss+xml"/>
+        <link><xsl:value-of select="/root/feed/url"/></link>
+        <description><xsl:value-of select="/root/feed/description"/></description>
         <lastBuildDate><xsl:value-of select="format-dateTime(xs:dateTime($lastBuild), $date-format-string)"/></lastBuildDate>
-        <language><xsl:value-of select="/root/content/data/language"/></language>
-        <xsl:if test="/root/content/data/updatePeriod and /root/content/data/updateFrequency">
-          <sy:updatePeriod><xsl:value-of select="/root/content/data/updatePeriod"/></sy:updatePeriod>
-          <sy:updateFrequency><xsl:value-of select="/root/content/data/updateFrequency"/></sy:updateFrequency>
+        <language><xsl:value-of select="/root/feed/language"/></language>
+        <xsl:if test="/root/feed/updatePeriod and /root/feed/updateFrequency">
+          <sy:updatePeriod><xsl:value-of select="/root/feed/updatePeriod"/></sy:updatePeriod>
+          <sy:updateFrequency><xsl:value-of select="/root/feed/updateFrequency"/></sy:updateFrequency>
         </xsl:if>
-        <generator>Enonic XP</generator>
+        <generator>Enonic XP - RSS app</generator>
 
         <xsl:apply-templates select="/root/items/item"/>
       </channel>
