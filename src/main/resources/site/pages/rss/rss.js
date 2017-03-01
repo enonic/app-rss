@@ -31,7 +31,7 @@ function findValueInJson(json, paths) {
 				try {
 					if (eval(jsonPath)) {
 						value = eval(jsonPath);
-						break; // Expect the first property in the string is the most important one to use
+						break; // Expect the first property in the string to be the most important one to use
 					}
 				} catch (e){
 					log.error((e.cause ? e.cause.message : e.message));
@@ -46,12 +46,7 @@ exports.get = function(req) {
 
 	var content = libs.portal.getContent();
 	var site = libs.portal.getSite();
-	/*
-	 log.info("*** CONTENT ***");
-	 libs.util.log(content);
-	 */
 
-	// TODO: Make lang dynamic, as in: read from site or something
 	content.data.language = content.data.language || 'en-US';
 
 	// Find the settings for our RSS
@@ -62,10 +57,7 @@ exports.get = function(req) {
 		date: commaStringToArray(content.data.mapDate) || ['publish.from','createdTime'],
 		body: commaStringToArray(content.data.mapBody) || ['data.body','data.html','data.text']
 	};
-	/*
-	 log.info("*** SETTINGS ***");
-	 libs.util.log(settings);
-	 */
+
 	var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
 
 	// TODO: Safeguard against "no content", like when setting up template
@@ -99,22 +91,15 @@ exports.get = function(req) {
 	searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
 	searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
 
-	//log.info(searchDate);
-
-	// TODO: IMPORTANT! If no contenttype defined, don't search
-
 	var result = libs.content.query({
 		start: 0,
-		count: 20, // TODO: Make this a setting in the content type!
+		count: 20,
 		query: query,
-		//query: '_path LIKE "/content' + folderPath + '/*" AND (language = "" OR language LIKE "' + content.data.language + '*")',
 		sort: searchDate + ' DESC, createdTime DESC',
 		contentTypes: [
 			content.data.contenttype // NOTE TO SELF: Don't even think about making RSS support multiple content types, the field mapping would be insane!
 		]
 	});
-
-//	libs.util.log(result);
 
 	var posts = result.hits;
 
@@ -154,29 +139,16 @@ exports.get = function(req) {
 			body: findValueInJson(posts[i], settings.body),
 			tumbnailId: findValueInJson(posts[i], settings.thumbnail)
 		};
-		/*
-		 log.info("*** Read settings ***");
-		 libs.util.log(itemData);
-		 */
-		// TODO: Handle no/missing data? Just send empty?
 
 		posts[i].data.description = itemData.summary ? removeTags(itemData.summary + '') : "";
 
 		// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
 		// So we need to do it the hacky way
-		// TODO: Handle with and without timezone much better! This will NOT work on data stored with timezone ... =/
 		var publishDate = itemData.date;
 		if (publishDate) {
 			publishDate += ':08.965Z';
 		}
 		posts[i].data.datePublished = itemData.date;
-
-
-		// TODO: Not in use ... should be setting to add or not?
-		//posts[i].data.post = itemData.body;
-
-		// TODO: Fallback to master settings for updatePeriod if not overwritten
-		// TODO: Fallback to master settings for updateFrequency if not overwritten
 
 		if(itemData.tumbnailId){
 			var thumbnailContent = libs.content.get({
@@ -196,7 +168,7 @@ exports.get = function(req) {
 				};
 			}
 		}
-		
+
 		if(!posts[i].publish){
 			posts[i].publish = {
 				from: posts[i].createdTime
