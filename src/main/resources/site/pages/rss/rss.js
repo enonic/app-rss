@@ -33,10 +33,14 @@ function findValueInJson(json, paths) {
 					value = eval(jsonPath);
 					//log.info(jsonPath);
 					//log.info(value);
-					if (value.trim() === "")
-						value = null; // Reset value if empty string (skip empties)
-					else
-						return value; // Expect the first property in the string is the most important one to use
+					if (value) {
+						if (value.trim() === "")
+							value = null; // Reset value if empty string (skip empties)
+						else
+							return value; // Expect the first property in the string is the most important one to use
+					} else {
+						return null;
+					}
 				}
 			} catch (e) {
 				log.error((e.cause ? e.cause.message : e.message));
