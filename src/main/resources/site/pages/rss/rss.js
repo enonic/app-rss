@@ -54,18 +54,15 @@ exports.get = function(req) {
 		title: commaStringToArray(content.data.mapTitle) || ['data.title','displayName'],
 		summary: commaStringToArray(content.data.mapSummary) || ['data.preface', 'data.intro','data.description','data.summary'],
 		thumbnail: commaStringToArray(content.data.mapThumbnail) || ['data.thumbnail', 'data.picture','data.photo'],
-		date: commaStringToArray(content.data.mapDate) || ['publish.from','createdTime'],
+		date: commaStringToArray(content.data.mapDate) || ['publish.from','data.publishDate','createdTime'],
 		body: commaStringToArray(content.data.mapBody) || ['data.body','data.html','data.text']
 	};
-
-	var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
-
-	// TODO: Safeguard against "no content", like when setting up template
 
 	var pageUrl = libs.portal.pageUrl({
 		path: content._path
 	});
 
+	var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
 	// Exclude certain paths from the search, controlled from admin
 	var contentRoot = '/content' + folderPath + '/';
 	var query = '_path LIKE "' + contentRoot + '*"';
@@ -87,6 +84,7 @@ exports.get = function(req) {
 		}
 	}
 
+	// Sort by the date field the app is set up to use
 	var searchDate = content.data.mapDate || 'publish.from';
 	searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
 	searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
