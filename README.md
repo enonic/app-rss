@@ -83,6 +83,7 @@ App is not fully done yet. It works, but some extra features is needed, as well 
 * Upgrade XP required to 6.9
 * Added support for displaying images for each feed item
 * Multiple minor fixes/adjustments/cleanups
+* **Breaking change:** now using built-in setting in XP for "publish date" in RSS feed. If you still depend on old custom fields you must revise your app settings for this field.
 
 ### Version 0.10.2
 
