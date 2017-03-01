@@ -62,12 +62,12 @@ exports.get = function(req) {
 		path: content._path
 	});
 
+	// Setup for path filtering
 	var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
-	// Exclude certain paths from the search, controlled from admin
 	var contentRoot = '/content' + folderPath + '/';
 	var query = '_path LIKE "' + contentRoot + '*"';
 
-	// Paths to include
+	// Content paths to include
 	if ( content.data.include ) {
 		content.data.include = libs.util.data.forceArray(content.data.include);
 		var includeLength = content.data.include.length;
@@ -75,7 +75,7 @@ exports.get = function(req) {
 			query += ' AND _path LIKE "' + contentRoot + content.data.include[i] + '/*"';
 		}
 	}
-	// Paths to skip
+	// Content paths to exclude
 	if ( content.data.exclude ) {
 		content.data.exclude = libs.util.data.forceArray(content.data.exclude);
 		var excludeLength = content.data.exclude.length;
