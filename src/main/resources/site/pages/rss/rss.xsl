@@ -41,42 +41,51 @@
     <item>
       <title>
         <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="displayName"/><xsl:text
-          disable-output-escaping="yes">]]&gt;</xsl:text>
+              disable-output-escaping="yes">]]&gt;</xsl:text>
       </title>
       <link>
         <xsl:value-of select="portal:pageUrl(concat('_path=', _path), '_type=absolute')"/>
       </link>
 
+      <xsl:if test="data/thumbnail">
+        <xsl:text disable-output-escaping="yes">&lt;enclosure size="</xsl:text>
+        <xsl:value-of select="data/thumbnail/size" />
+        <xsl:text disable-output-escaping="yes">" type="</xsl:text>
+        <xsl:value-of select="data/thumbnail/type" />
+        <xsl:text disable-output-escaping="yes">" url="</xsl:text>
+        <xsl:value-of select="data/thumbnail/url" />
+        <xsl:text disable-output-escaping="yes">" /&gt;</xsl:text>
+      </xsl:if>
       <pubDate>
-        <xsl:value-of select="format-dateTime(xs:dateTime(createdTime), $date-format-string)"/>
+        <xsl:value-of select="format-dateTime(xs:dateTime(publish/from), $date-format-string)"/>
       </pubDate>
-<!--
-      <dc:creator>
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="data/authorName"/><xsl:text
-          disable-output-escaping="yes"> ]]&gt;</xsl:text>
-      </dc:creator>
--->
-<!--
-      <xsl:for-each select="data/tags/item | data/categoryNames/item">
-        <category>
-          <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="."/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text>
-        </category>
-      </xsl:for-each>
--->
+      <!--
+            <dc:creator>
+              <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="data/authorName"/><xsl:text
+                disable-output-escaping="yes"> ]]&gt;</xsl:text>
+            </dc:creator>
+      -->
+      <!--
+            <xsl:for-each select="data/tags/item | data/categoryNames/item">
+              <category>
+                <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="."/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text>
+              </category>
+            </xsl:for-each>
+      -->
       <guid isPermaLink="false">
         <xsl:value-of select="portal:pageUrl(concat('_path=', _path), '_type=absolute')"/>
       </guid>
 
       <description>
         <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/description"/><xsl:text
-          disable-output-escaping="yes">]]&gt;</xsl:text>
+              disable-output-escaping="yes">]]&gt;</xsl:text>
       </description>
-<!--
-      <content:encoded>
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/post" disable-output-escaping="yes"/><xsl:text
-          disable-output-escaping="yes">]]&gt;</xsl:text>
-      </content:encoded>
--->
+      <!--
+            <content:encoded>
+              <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/post" disable-output-escaping="yes"/><xsl:text
+                disable-output-escaping="yes">]]&gt;</xsl:text>
+            </content:encoded>
+      -->
     </item>
   </xsl:template>
 

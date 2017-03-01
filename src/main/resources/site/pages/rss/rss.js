@@ -27,9 +27,14 @@ function findValueInJson(json, paths) {
 		for (var i = 0; i < pathLength; i++) {
 			if ( paths[i] ) {
 				jsonPath = 'json.' + paths[i] + '';
-				if ( eval(jsonPath) ) {
-					value = eval(jsonPath);
-					break; // Expect the first property in the string is the most important one to use
+
+				try {
+					if (eval(jsonPath)) {
+						value = eval(jsonPath);
+						break; // Expect the first property in the string is the most important one to use
+					}
+				} catch (e){
+					log.error((e.cause ? e.cause.message : e.message));
 				}
 			}
 		}
@@ -41,10 +46,10 @@ exports.get = function(req) {
 
 	var content = libs.portal.getContent();
 	var site = libs.portal.getSite();
-/*
-	log.info("*** CONTENT ***");
-	libs.util.log(content);
-*/
+	/*
+	 log.info("*** CONTENT ***");
+	 libs.util.log(content);
+	 */
 
 	// TODO: Make lang dynamic, as in: read from site or something
 	content.data.language = content.data.language || 'en-US';
@@ -52,14 +57,15 @@ exports.get = function(req) {
 	// Find the settings for our RSS
 	var settings = {
 		title: commaStringToArray(content.data.mapTitle) || ['data.title','displayName'],
-		summary: commaStringToArray(content.data.mapSummary) || ['data.preface','data.description','data.summary'],
-		date: commaStringToArray(content.data.mapDate) || ['data.publishDate','createdTime'],
+		summary: commaStringToArray(content.data.mapSummary) || ['data.preface', 'data.intro','data.description','data.summary'],
+		thumbnail: commaStringToArray(content.data.mapThumbnail) || ['data.thumbnail', 'data.picture','data.photo'],
+		date: commaStringToArray(content.data.mapDate) || ['publish.from','createdTime'],
 		body: commaStringToArray(content.data.mapBody) || ['data.body','data.html','data.text']
 	};
-/*
-	log.info("*** SETTINGS ***");
-	libs.util.log(settings);
-*/
+	/*
+	 log.info("*** SETTINGS ***");
+	 libs.util.log(settings);
+	 */
 	var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
 
 	// TODO: Safeguard against "no content", like when setting up template
@@ -89,11 +95,11 @@ exports.get = function(req) {
 		}
 	}
 
-	var searchDate = content.data.mapDate || 'data.publishDate';
+	var searchDate = content.data.mapDate || 'publish.from';
 	searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
 	searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
 
-//	log.info(searchDate);
+	//log.info(searchDate);
 
 	// TODO: IMPORTANT! If no contenttype defined, don't search
 
@@ -116,12 +122,12 @@ exports.get = function(req) {
 	var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
 	var tagOrComment = new RegExp(
 		'<(?:'
-		// Comment body.
+			// Comment body.
 		+ '!--(?:(?:-*[^->])*--+|-?)'
-		// Special "raw text" elements whose content should be elided.
+			// Special "raw text" elements whose content should be elided.
 		+ '|script\\b' + tagBody + '>[\\s\\S]*?</script\\s*'
 		+ '|style\\b' + tagBody + '>[\\s\\S]*?</style\\s*'
-		// Regular name
+			// Regular name
 		+ '|/?[a-z]'
 		+ tagBody
 		+ ')>',
@@ -145,15 +151,16 @@ exports.get = function(req) {
 			title: findValueInJson(posts[i], settings.title),
 			summary: findValueInJson(posts[i], settings.summary),
 			date: findValueInJson(posts[i], settings.date),
-			body: findValueInJson(posts[i], settings.body)
+			body: findValueInJson(posts[i], settings.body),
+			tumbnailId: findValueInJson(posts[i], settings.thumbnail)
 		};
-/*
-		log.info("*** Read settings ***");
-		libs.util.log(itemData);
-*/
+		/*
+		 log.info("*** Read settings ***");
+		 libs.util.log(itemData);
+		 */
 		// TODO: Handle no/missing data? Just send empty?
 
-		posts[i].data.description = removeTags(itemData.summary + '');
+		posts[i].data.description = itemData.summary ? removeTags(itemData.summary + '') : "";
 
 		// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
 		// So we need to do it the hacky way
@@ -170,6 +177,32 @@ exports.get = function(req) {
 
 		// TODO: Fallback to master settings for updatePeriod if not overwritten
 		// TODO: Fallback to master settings for updateFrequency if not overwritten
+
+		if(itemData.tumbnailId){
+			var thumbnailContent = libs.content.get({
+				key: itemData.tumbnailId
+			});
+			if(thumbnailContent){
+				var thumbnailAttachment = thumbnailContent.attachments[thumbnailContent.data.media.attachment];
+
+				posts[i].data.thumbnail = {
+					type: thumbnailAttachment.mimeType,
+					size: thumbnailAttachment.size,
+					url: libs.portal.imageUrl({
+						id: itemData.tumbnailId,
+						scale: "block(480,270)",
+						type: "absolute"
+					})
+				};
+			}
+		}
+		
+		if(!posts[i].publish){
+			posts[i].publish = {
+				from: posts[i].createdTime
+			}
+		}
+
 	}
 
 	var params = {

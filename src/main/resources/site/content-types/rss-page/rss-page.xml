@@ -37,18 +37,27 @@
       <items>
         <input type="TextLine" name="mapTitle">
           <label>Title</label>
+          <help-text>Default mapping: data.title, displayName</help-text>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+        <input type="TextLine" name="mapThumbnail">
+          <label>Thumbnail</label>
+          <help-text>Default mapping: data.thumbnail, data.picture, data.photo</help-text>
           <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="mapSummary">
           <label>Description/excerpt</label>
+          <help-text>Default mapping: data.preface, data.intro, data.description, data.summary</help-text>
           <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="mapDate">
           <label>Publish date</label>
+          <help-text>Default mapping: publish.from, createdTime</help-text>
           <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="mapBody">
           <label>Full body</label>
+          <help-text>Default mapping: data.body, data.html, data.text</help-text>
           <occurrences minimum="0" maximum="1"/>
         </input>
       </items>
