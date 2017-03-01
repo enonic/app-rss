@@ -57,7 +57,7 @@
         <xsl:text disable-output-escaping="yes">" /&gt;</xsl:text>
       </xsl:if>
       <pubDate>
-        <xsl:value-of select="format-dateTime(xs:dateTime(publish/from), $date-format-string)"/>
+        <xsl:value-of select="format-dateTime(xs:dateTime(data/datePublished), $date-format-string)"/>
       </pubDate>
       <!--
             <dc:creator>
