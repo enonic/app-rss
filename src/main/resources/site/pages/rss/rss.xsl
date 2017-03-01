@@ -13,16 +13,14 @@
 
 
   <xsl:variable name="date-format-string" select="'[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01] +0200'"/>
-  <xsl:variable name="lastBuild" select="/root/posts/item[1]/modifiedTime"/>
+  <xsl:variable name="lastBuild" select="/root/items[1]/modifiedTime"/>
 
   <xsl:template match="/">
     <rss version="2.0">
       <channel>
         <title><xsl:value-of select="/root/site/displayName"/></title>
         <atom:link href="{/root/content/pageUrl}" rel="self" type="application/rss+xml"/>
-        <link>
-          <xsl:value-of select="/root/content/pageUrl"/>
-        </link>
+        <link><xsl:value-of select="/root/content/pageUrl"/></link>
         <description><xsl:value-of select="/root/site/data/description"/></description>
         <lastBuildDate><xsl:value-of select="format-dateTime(xs:dateTime($lastBuild), $date-format-string)"/></lastBuildDate>
         <language><xsl:value-of select="/root/content/data/language"/></language>
@@ -32,7 +30,7 @@
         </xsl:if>
         <generator>Enonic XP</generator>
 
-        <xsl:apply-templates select="/root/posts/item"/>
+        <xsl:apply-templates select="/root/items"/>
       </channel>
     </rss>
   </xsl:template>
@@ -40,24 +38,24 @@
   <xsl:template match="item">
     <item>
       <title>
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/title"/><xsl:text
+        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="title"/><xsl:text
               disable-output-escaping="yes">]]&gt;</xsl:text>
       </title>
       <link>
-        <xsl:value-of select="data/link"/>
+        <xsl:value-of select="link"/>
       </link>
 
-      <xsl:if test="data/thumbnail">
+      <xsl:if test="thumbnail">
         <xsl:text disable-output-escaping="yes">&lt;enclosure size="</xsl:text>
-        <xsl:value-of select="data/thumbnail/size" />
+        <xsl:value-of select="thumbnail/size" />
         <xsl:text disable-output-escaping="yes">" type="</xsl:text>
-        <xsl:value-of select="data/thumbnail/type" />
+        <xsl:value-of select="thumbnail/type" />
         <xsl:text disable-output-escaping="yes">" url="</xsl:text>
-        <xsl:value-of select="data/thumbnail/url" />
+        <xsl:value-of select="thumbnail/url" />
         <xsl:text disable-output-escaping="yes">" /&gt;</xsl:text>
       </xsl:if>
       <pubDate>
-        <xsl:value-of select="format-dateTime(xs:dateTime(data/datePublished), $date-format-string)"/>
+        <xsl:value-of select="format-dateTime(xs:dateTime(datePublished), $date-format-string)"/>
       </pubDate>
       <!--
             <dc:creator>
@@ -73,11 +71,11 @@
             </xsl:for-each>
       -->
       <guid isPermaLink="false">
-        <xsl:value-of select="data/link"/>
+        <xsl:value-of select="link"/>
       </guid>
 
       <description>
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/summary"/><xsl:text
+        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="summary"/><xsl:text
               disable-output-escaping="yes">]]&gt;</xsl:text>
       </description>
       <!--

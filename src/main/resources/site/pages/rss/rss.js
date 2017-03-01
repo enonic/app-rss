@@ -133,6 +133,8 @@ exports.get = function(req) {
 
 	var itemData = {};
 	var postsLength = posts.length;
+	var feedItems = [];
+	var feedItem = {};
 
 	for (var i = 0; i < postsLength; i++) {
 
@@ -144,9 +146,9 @@ exports.get = function(req) {
 			thumbnailId: findValueInJson(posts[i], settings.thumbnail)
 		};
 
-		posts[i].data.title = itemData.title;
-		posts[i].data.summary = itemData.summary ? removeTags(itemData.summary + '') : "";
-		posts[i].data.link = libs.portal.pageUrl({
+		feedItem.title = itemData.title;
+		feedItem.summary = itemData.summary ? removeTags(itemData.summary + '') : "";
+		feedItem.link = libs.portal.pageUrl({
 			path: posts[i]._path,
 			type: 'absolute'
 		});
@@ -156,7 +158,7 @@ exports.get = function(req) {
 		if (publishDate) {
 			publishDate += ':08.965Z';
 		}
-		posts[i].data.datePublished = itemData.date;
+		feedItem.publishDate = itemData.date;
 
 		if (itemData.thumbnailId) {
 			var thumbnailContent = libs.content.get({
@@ -165,7 +167,7 @@ exports.get = function(req) {
 			if (thumbnailContent) {
 				var thumbnailAttachment = thumbnailContent.attachments[thumbnailContent.data.media.attachment];
 
-				posts[i].data.thumbnail = {
+				feedItem.thumbnail = {
 					type: thumbnailAttachment.mimeType,
 					size: thumbnailAttachment.size,
 					url: libs.portal.imageUrl({
@@ -176,15 +178,18 @@ exports.get = function(req) {
 				};
 			}
 		}
+		feedItems.push(feedItem);
 	}
 
-	libs.util.log(posts);
+	//libs.util.log(posts);
+	libs.util.log(feedItems);
 
 	var params = {
 		site: site,
 		content: content,
-		posts: posts
+		items: feedItems
 	};
+	return;
 
 	// Render
 	var body = libs.xslt.render(view, params);
