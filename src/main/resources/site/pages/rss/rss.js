@@ -123,11 +123,6 @@ exports.get = function(req) {
 	searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
 	searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
 
-	//log.info(searchDate);
-	//log.info(query);
-
-	//libs.util.log(settings);
-
 	var result = libs.content.query({
 		start: 0,
 		count: 20,
@@ -138,9 +133,9 @@ exports.get = function(req) {
 		]
 	});
 
-	var feedItems = [];
 	var posts = result.hits;
 	var postsLength = posts.length;
+	var feedItems = [];
 
 	for (var i = 0; i < postsLength; i++) {
 		var feedItem = {};
@@ -186,9 +181,6 @@ exports.get = function(req) {
 		// Done, add item to array
 		feedItems.push(feedItem);
 	}
-
-	//libs.util.log(posts);
-	libs.util.log(feedItems);
 
 	var params = {
 		feed: rssFeed,
