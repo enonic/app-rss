@@ -44,8 +44,8 @@ function findValueInJson(json, paths) {
 
 exports.get = function(req) {
 
-	var content = libs.portal.getContent();
 	var site = libs.portal.getSite();
+	var content = libs.portal.getContent();
 
 	content.data.language = content.data.language || 'en-US';
 
@@ -58,8 +58,9 @@ exports.get = function(req) {
 		body: commaStringToArray(content.data.mapBody) || ['data.body','data.html','data.text']
 	};
 
-	var pageUrl = libs.portal.pageUrl({
-		path: content._path
+	content.data.pageUrl = libs.portal.pageUrl({
+		path: content._path,
+		type: 'absolute'
 	});
 
 	// Setup for path filtering
@@ -91,6 +92,8 @@ exports.get = function(req) {
 
 	log.info(searchDate);
 	log.info(query);
+
+	libs.util.log(settings);
 
 	var result = libs.content.query({
 		start: 0,
@@ -143,7 +146,10 @@ exports.get = function(req) {
 
 		posts[i].data.title = itemData.title;
 		posts[i].data.summary = itemData.summary ? removeTags(itemData.summary + '') : "";
-
+		posts[i].data.link = libs.portal.pageUrl({
+			path: posts[i]._path,
+			type: 'absolute'
+		});
 		// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
 		// So we need to do it the hacky way
 		var publishDate = itemData.date;
@@ -172,11 +178,12 @@ exports.get = function(req) {
 		}
 	}
 
+	libs.util.log(posts);
+
 	var params = {
+		site: site,
 		content: content,
-		posts: posts,
-		pageUrl: pageUrl,
-		site: site
+		posts: posts
 	};
 
 	// Render

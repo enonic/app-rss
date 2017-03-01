@@ -19,9 +19,9 @@
     <rss version="2.0">
       <channel>
         <title><xsl:value-of select="/root/site/displayName"/></title>
-        <atom:link href="{portal:pageUrl(concat('_path=', root/content/_path), '_type=absolute')}" rel="self" type="application/rss+xml"/>
+        <atom:link href="{/root/content/pageUrl}" rel="self" type="application/rss+xml"/>
         <link>
-          <xsl:value-of select="portal:pageUrl(concat('_path=', root/content/_path), '_type=absolute')"/>
+          <xsl:value-of select="/root/content/pageUrl"/>
         </link>
         <description><xsl:value-of select="/root/site/data/description"/></description>
         <lastBuildDate><xsl:value-of select="format-dateTime(xs:dateTime($lastBuild), $date-format-string)"/></lastBuildDate>
@@ -44,7 +44,7 @@
               disable-output-escaping="yes">]]&gt;</xsl:text>
       </title>
       <link>
-        <xsl:value-of select="portal:pageUrl(concat('_path=', _path), '_type=absolute')"/>
+        <xsl:value-of select="data/link"/>
       </link>
 
       <xsl:if test="data/thumbnail">
@@ -73,7 +73,7 @@
             </xsl:for-each>
       -->
       <guid isPermaLink="false">
-        <xsl:value-of select="portal:pageUrl(concat('_path=', _path), '_type=absolute')"/>
+        <xsl:value-of select="data/link"/>
       </guid>
 
       <description>
