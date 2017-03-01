@@ -40,7 +40,7 @@
   <xsl:template match="item">
     <item>
       <title>
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="displayName"/><xsl:text
+        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/title"/><xsl:text
               disable-output-escaping="yes">]]&gt;</xsl:text>
       </title>
       <link>
@@ -77,7 +77,7 @@
       </guid>
 
       <description>
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/description"/><xsl:text
+        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/summary"/><xsl:text
               disable-output-escaping="yes">]]&gt;</xsl:text>
       </description>
       <!--

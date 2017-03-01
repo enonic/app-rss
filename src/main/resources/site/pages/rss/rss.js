@@ -141,7 +141,8 @@ exports.get = function(req) {
 			thumbnailId: findValueInJson(posts[i], settings.thumbnail)
 		};
 
-		posts[i].data.description = itemData.summary ? removeTags(itemData.summary + '') : "";
+		posts[i].data.title = itemData.title;
+		posts[i].data.summary = itemData.summary ? removeTags(itemData.summary + '') : "";
 
 		// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
 		// So we need to do it the hacky way
@@ -151,11 +152,11 @@ exports.get = function(req) {
 		}
 		posts[i].data.datePublished = itemData.date;
 
-		if(itemData.thumbnailId){
+		if (itemData.thumbnailId) {
 			var thumbnailContent = libs.content.get({
 				key: itemData.thumbnailId
 			});
-			if(thumbnailContent){
+			if (thumbnailContent) {
 				var thumbnailAttachment = thumbnailContent.attachments[thumbnailContent.data.media.attachment];
 
 				posts[i].data.thumbnail = {
@@ -169,13 +170,6 @@ exports.get = function(req) {
 				};
 			}
 		}
-
-		if(!posts[i].publish){
-			posts[i].publish = {
-				from: posts[i].createdTime
-			}
-		}
-
 	}
 
 	var params = {
