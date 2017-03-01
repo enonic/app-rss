@@ -52,11 +52,11 @@
         </input>
         <input type="TextLine" name="mapDate">
           <label>Publish date</label>
-          <help-text>Default mapping: publish.from, createdTime</help-text>
+          <help-text>Default mapping: publish.from, data,publishDate, createdTime</help-text>
           <occurrences minimum="0" maximum="1"/>
         </input>
         <input type="TextLine" name="mapBody">
-          <label>Full body</label>
+          <label>BETA - NOT USED: Full body</label>
           <help-text>Default mapping: data.body, data.html, data.text</help-text>
           <occurrences minimum="0" maximum="1"/>
         </input>
