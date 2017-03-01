@@ -123,10 +123,10 @@ exports.get = function(req) {
 	searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
 	searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
 
-	log.info(searchDate);
-	log.info(query);
+	//log.info(searchDate);
+	//log.info(query);
 
-	libs.util.log(settings);
+	//libs.util.log(settings);
 
 	var result = libs.content.query({
 		start: 0,
@@ -159,13 +159,10 @@ exports.get = function(req) {
 			path: posts[i]._path,
 			type: 'absolute'
 		});
+
 		// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
 		// So we need to do it the hacky way
-		var publishDate = itemData.date;
-		if (publishDate) {
-			publishDate += ':08.965Z';
-		}
-		feedItem.publishDate = publishDate;
+		feedItem.publishDate = itemData.date ? itemData.date + ':08.965Z' : posts[i].createdTime;
 
 		if (itemData.thumbnailId) {
 			var thumbnailContent = libs.content.get({
@@ -185,6 +182,8 @@ exports.get = function(req) {
 				};
 			}
 		}
+
+		// Done, add item to array
 		feedItems.push(feedItem);
 	}
 
