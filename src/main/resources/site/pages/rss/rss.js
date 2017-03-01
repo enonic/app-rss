@@ -15,27 +15,30 @@ function commaStringToArray(str) {
 	var arr = commas.split(',');
 	if (arr) {
 		arr.map(function(s) { return s.trim() });
+	} else {
+		arr = libs.util.data.forceArray(str); // Make sure we always work with an array
 	}
 	return arr;
 }
 
 function findValueInJson(json, paths) {
 	var value = null;
-	if (paths) {
-		var pathLength = paths.length;
-		var jsonPath = ";"
-		for (var i = 0; i < pathLength; i++) {
-			if ( paths[i] ) {
-				jsonPath = 'json.' + paths[i] + '';
+	var pathLength = paths.length;
+	var jsonPath = "";
 
-				try {
-					if (eval(jsonPath)) {
-						value = eval(jsonPath);
-						break; // Expect the first property in the string to be the most important one to use
-					}
-				} catch (e){
-					log.error((e.cause ? e.cause.message : e.message));
+	for (var i = 0; i < pathLength; i++) {
+		if ( paths[i] ) {
+			jsonPath = 'json.' + paths[i] + '';
+			try {
+				if ( eval(jsonPath) ) {
+					value = eval(jsonPath);
+					if (value.trim() === "")
+						value = null; // Reset value if empty string (skip empties)
+					else
+						break; // Expect the first property in the string is the most important one to use
 				}
+			} catch (e) {
+				log.error((e.cause ? e.cause.message : e.message));
 			}
 		}
 	}
