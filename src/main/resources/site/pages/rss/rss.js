@@ -10,13 +10,11 @@ var view = resolve('rss.xsl');
 
 function commaStringToArray(str) {
 	if ( !str || str == '') return null;
-
 	var commas = str || '';
 	var arr = commas.split(',');
+	arr = libs.util.data.forceArray(str); // Make sure we always work with an array
 	if (arr) {
 		arr.map(function(s) { return s.trim() });
-	} else {
-		arr = libs.util.data.forceArray(str); // Make sure we always work with an array
 	}
 	return arr;
 }
@@ -161,7 +159,7 @@ exports.get = function(req) {
 		if (publishDate) {
 			publishDate += ':08.965Z';
 		}
-		feedItem.publishDate = itemData.date;
+		feedItem.publishDate = publishDate;
 
 		if (itemData.thumbnailId) {
 			var thumbnailContent = libs.content.get({
