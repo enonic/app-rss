@@ -152,7 +152,7 @@ exports.get = function(req) {
 			thumbnailId: findValueInJson(posts[i], settings.thumbnail)
 		};
 
-		feedItem.title = itemData.title;
+		feedItem.title = itemData.title || 'Title missing';
 		feedItem.modifiedTime = posts[i].modifiedTime;
 		feedItem.summary = itemData.summary ? removeTags(itemData.summary + '') : "";
 		feedItem.link = libs.portal.pageUrl({
