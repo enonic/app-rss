@@ -2,12 +2,13 @@
 
 **Beta software!**
 
-This Enonic XP 6 application adds RSS capabilities to your [Enonic XP](https://github.com/enonic/xp) site. With this app installed on a site you have the ability to create RSS feeds (as content) and map them to any Content Type.
+This Enonic XP 6 application adds RSS capabilities to your [Enonic XP](https://github.com/enonic/xp) site. With it you can create RSS feeds (as content) and map them to any Content Type (so you can have multiple feeds).
 
 The App adds:
 * one content type (RSS-feed)
 * one page controller (creates the XML)
 * a filter to insert RSS meta data
+* **page template must be created manually after installation!**
 
 ## Installation
 
@@ -37,7 +38,7 @@ Select from the list of all content types which one to use in this feed. We cann
 
 #### Paths
 
-Add any path you want to specifically include (omit all the rest) or exclude. The paths are automatically prepended with the base path for the current site, with any childs of it also included/excluded automatically. The search string in the back is built up like this: `$site/[YOUR_SETTING]/*`
+Add any path you want to specifically include (omit all the rest) or exclude. The paths are automatically prepended with the base path for the current site, with any child of it also included/excluded automatically. The search string in the back is built up like this: `$site/[YOUR_SETTING]/*`
 
 Just use the "Add" button to create multiple paths to include/exclude.
 
@@ -48,6 +49,7 @@ To make this all work you must map any fields from the content type you want a f
 We use a waterfall technique on fields to use so that if you use the most common field names in your content type then you don't need to set anything up. These are the automatic mappings, from left to right, that the app automatically checks for. If not in this list, add it as a string (like `data.name` or `data['publish-date']`) to map to your fields (it maps to the results.hits[i] json path from a query-search).
 
 **Title**: [Your setting], `data.title`, `displayName`  
+**Thumbnail**: [Your setting], `data.thumbnail`, `data.picture`, `data.photo`  
 **Description**: [Your setting], `data.preface`, `data.description`, `data.summary`  
 **Publish date**: [Your setting], `data.publishDate`, `createdTime`  
 **Full body**: [Your setting], `data.body`, `data.html`, `data.text`  
@@ -57,7 +59,7 @@ We use a waterfall technique on fields to use so that if you use the most common
 
 ## Disclaimer
 
-App is not fully done yet. It works, but some extra features is needed, as well as increased usability. Consider it a beta.
+App is still in *BETA*! It's not fully done yet. It works, but some extra features is needed, as well as increased usability, more testing, and minor issues needs fixing. Run in production at your own risk.
 
 ## Known issues
 
@@ -81,8 +83,9 @@ App is not fully done yet. It works, but some extra features is needed, as well 
 ### Version 0.11.0
 
 * Added support for displaying images for each feed item
+* Refactor XML rendering code to more efficient
 * Multiple minor fixes/adjustments/cleanups/speedups/refactoring
-* Upgrade XP required to 6.9
+* Upgrade XP required version to 6.9
 * **Breaking change:** now using built-in setting in XP for "publish date" in RSS feed. If you still depend on old custom fields you must revise your app settings for this field.
 
 ### Version 0.10.2
