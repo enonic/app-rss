@@ -86,7 +86,7 @@ App is still in *BETA*! It's not fully done yet. It works, but some extra featur
 * Refactor XML rendering code to more efficient
 * Multiple minor fixes/adjustments/cleanups/speedups/refactoring
 * Upgrade XP required version to 6.9
-* **Breaking change:** now using built-in setting in XP for "publish date" in RSS feed. If you still depend on old custom fields you must revise your app settings for this field.
+* **Breaking change:** now using the built-in setting from XP for "publish date" in RSS feed. If you still depend on old custom fields you must revise your app settings for this field.
 
 ### Version 0.10.2
 
