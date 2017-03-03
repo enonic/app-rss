@@ -159,7 +159,7 @@ exports.get = function(req) {
 
 		// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
 		// So we need to do it the hacky way
-		feedItem.publishDate = itemData.date ? itemData.date + ':08.965Z' : posts[i].createdTime;
+		feedItem.publishDate = itemData.date ? (itemData.date.indexOf("Z") != -1 ? itemData.date : itemData.date + ':08.965Z') : posts[i].createdTime;
 
 		if (itemData.thumbnailId) {
 			var thumbnailContent = libs.content.get({
