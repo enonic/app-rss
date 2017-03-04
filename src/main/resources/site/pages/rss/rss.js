@@ -2,7 +2,8 @@ var libs = {
 	content: require('/lib/xp/content'),
 	portal: require('/lib/xp/portal'),
 	xslt: require('/lib/xp/xslt'),
-	util: require('/lib/enonic/util')
+	util: require('/lib/enonic/util'),
+	thymeleaf: require('/lib/xp/thymeleaf')
 };
 
 var view = resolve('rss.xsl');
@@ -93,6 +94,7 @@ exports.get = function(req) {
 		};
 	} else {
 		var rssFeed = {}; // General info about the feed
+		var view = resolve('rss.xsl');
 
 		rssFeed.title = content.displayName;
 		rssFeed.description = site.data.description;
