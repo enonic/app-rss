@@ -80,6 +80,11 @@ App is still in *BETA*! It's not fully done yet. It works, but some extra featur
 
 ## Changelog
 
+### Version 0.11.1
+
+* Fixed a bug that breaks the RSS feed if the Published Date property is a DateTime with timezone
+* Controller does not run if content is not a RSS Page
+
 ### Version 0.11.0
 
 * Added support for displaying images for each feed item
