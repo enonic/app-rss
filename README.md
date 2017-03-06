@@ -50,9 +50,12 @@ We use a waterfall technique on fields to use so that if you use the most common
 
 **Title**: [Your setting], `data.title`, `displayName`  
 **Thumbnail**: [Your setting], `data.thumbnail`, `data.picture`, `data.photo`  
-**Description**: [Your setting], `data.preface`, `data.description`, `data.summary`  
+**Description**: [Your setting], `data.preface`, `data.description`, `data.summary`
+**Author**: [Your setting], `data.author` or content creator displayName
 **Publish date**: [Your setting], `data.publishDate`, `createdTime`  
 **Full body**: [Your setting], `data.body`, `data.html`, `data.text`  
+**Categories**: [Your setting], `data.category`, `data.categories`, `data.tags`
+**Timezone**: [Your setting], `Etc/UTC`
 
 * Remember to start with `data.` when mapping custom fields from your content type.
 * If your field name contains special characters, like `-`, then wrap the name correctly: `data['My-super-field!']`
@@ -72,6 +75,8 @@ App is still in *BETA*! It's not fully done yet. It works, but some extra featur
 
 | Version        | XP version |
 | ------------- | ------------- |
+| 0.11.2 | 6.9.3 |
+| 0.11.1 | 6.9.3 |
 | 0.11.0 | 6.9.3 |
 | 0.10.2 | 6.7.3 |
 | 0.10.1 | 6.5.0 |
@@ -79,6 +84,13 @@ App is still in *BETA*! It's not fully done yet. It works, but some extra featur
 | 0.9.0 | 6.5.0 |
 
 ## Changelog
+
+### Version 0.11.2
+
+* Added support to timezone (using moment.js). For a complete list of time zones that can be used, see:
+https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+* Added support to author name. If no fields are set, the content creator displayName is set as authorName
+* Added support to categories list (no domain tag is added, just category names)
 
 ### Version 0.11.1
 
