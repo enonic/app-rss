@@ -3,14 +3,16 @@ var libs = {
 	portal: require('/lib/xp/portal'),
 	xslt: require('/lib/xp/xslt'),
 	util: require('/lib/enonic/util'),
-	thymeleaf: require('/lib/xp/thymeleaf')
+	thymeleaf: require('/lib/xp/thymeleaf'),
+	auth: require('/lib/xp/auth'),
+	moment: require("/lib/moment-timezone")
 };
 
 var view = resolve('rss.xsl');
 
 
 function commaStringToArray(str) {
-	if ( !str || str == '') return null;
+	if ( !str || str == '' || str == null) return null;
 	var commas = str || '';
 	var arr = commas.split(',');
 	arr = libs.util.data.forceArray(str); // Make sure we always work with an array
@@ -34,13 +36,15 @@ function findValueInJson(json, paths) {
 					value = eval(jsonPath);
 					//log.info(jsonPath);
 					//log.info(value);
-					if (value) {
+					if (typeof value === "string") {
 						if (value.trim() === "")
 							value = null; // Reset value if empty string (skip empties)
 						else
 							return value; // Expect the first property in the string is the most important one to use
+					} else if(Array.isArray(value)){
+						return value;
 					} else {
-						return null;
+							return null;
 					}
 				}
 			} catch (e) {
@@ -108,9 +112,12 @@ exports.get = function(req) {
 		var settings = {
 			title: commaStringToArray(content.data.mapTitle) || ['data.title', 'displayName'],
 			summary: commaStringToArray(content.data.mapSummary) || ['data.preface', 'data.intro', 'data.description', 'data.summary'],
+			author: commaStringToArray(content.data.mapAuthor) || ['data.author'],
 			thumbnail: commaStringToArray(content.data.mapThumbnail) || ['data.thumbnail', 'data.picture', 'data.photo'],
 			date: commaStringToArray(content.data.mapDate) || ['publish.from', 'data.publishDate', 'createdTime'],
-			body: commaStringToArray(content.data.mapBody) || ['data.body', 'data.html', 'data.text']
+			body: commaStringToArray(content.data.mapBody) || ['data.body', 'data.html', 'data.text'],
+			categories: commaStringToArray(content.data.mapCategories) || ['data.category', 'data.categories', 'data.tags'],
+			timeZone: content.data.timezone || "Etc/UCT"
 		};
 
 		// Setup for path filtering
@@ -157,17 +164,49 @@ exports.get = function(req) {
 		var feedItems = [];
 
 		for (var i = 0; i < postsLength; i++) {
+
 			var feedItem = {};
 			var itemData = {
 				title: findValueInJson(posts[i], settings.title),
 				summary: findValueInJson(posts[i], settings.summary),
 				date: findValueInJson(posts[i], settings.date),
 				body: findValueInJson(posts[i], settings.body),
-				thumbnailId: findValueInJson(posts[i], settings.thumbnail)
+				authorName: findValueInJson(posts[i], settings.author),
+				thumbnailId: findValueInJson(posts[i], settings.thumbnail),
+				categories: []
 			};
 
+			if(!itemData.authorName || itemData.authorName == "" || itemData.authorName == null){
+				var userCreator = libs.auth.getPrincipal(posts[i].creator);
+				itemData.authorName = userCreator.displayName;
+			}
+
+			var tmpCategories = libs.util.data.forceArray(findValueInJson(posts[i], settings.categories));
+			log.info(tmpCategories)
+
+			if(JSON.stringify(tmpCategories) != "[null]") {
+				tmpCategories.forEach(function (category) {
+					log.info(category+"  ||   "+typeof category);
+					if(typeof category === "string") {
+						if (/^(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})$/.test(category)) {
+							var categoryContent = libs.content.get({
+								key: category
+							});
+
+							if (categoryContent) {
+								itemData.categories.push(categoryContent.displayName);
+							}
+						} else if(category.trim() != ""){
+							itemData.categories.push(category);
+						}
+					}
+				});
+			}
+
 			feedItem.title = itemData.title || 'Title missing';
+			feedItem.categories = itemData.categories;
 			feedItem.modifiedTime = posts[i].modifiedTime;
+			feedItem.authorName = itemData.authorName;
 			feedItem.summary = itemData.summary ? removeTags(itemData.summary + '') : "";
 			feedItem.link = libs.portal.pageUrl({
 				path: posts[i]._path,
@@ -177,6 +216,8 @@ exports.get = function(req) {
 			// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
 			// So we need to do it the hacky way
 			feedItem.publishDate = itemData.date ? (itemData.date.indexOf("Z") != -1 ? itemData.date : itemData.date + ':08.965Z') : posts[i].createdTime;
+
+			feedItem.publishDate = libs.moment(feedItem.publishDate, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
 
 			if (itemData.thumbnailId) {
 				var thumbnailContent = libs.content.get({
@@ -201,10 +242,15 @@ exports.get = function(req) {
 			feedItems.push(feedItem);
 		}
 
+		//Set last build for the feed equal to the top article result or the rss-page modifiedDate
+		rssFeed.lastBuild = feedItems.length > 0 ?  feedItems[0].publishDate : libs.moment(content.modifiedTime, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
+
+
 		var params = {
 			feed: rssFeed,
 			items: feedItems
 		};
+		log.info(JSON.stringify(params, null, 3));
 
 		// Render
 		var body = libs.xslt.render(view, params);

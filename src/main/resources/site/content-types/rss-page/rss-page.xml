@@ -50,11 +50,30 @@
           <help-text>Default mapping: data.preface, data.intro, data.description, data.summary</help-text>
           <occurrences minimum="0" maximum="1"/>
         </input>
+        <input type="TextLine" name="mapAuthor">
+          <label>Author</label>
+          <help-text>Default mapping: data.author</help-text>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+
+        <input type="TextLine" name="mapCategories">
+          <label>Categories</label>
+          <help-text>Default mapping: data.category, data.categories, data.tags</help-text>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+
         <input type="TextLine" name="mapDate">
           <label>Publish date</label>
           <help-text>Default mapping: publish.from, data.publishDate, createdTime</help-text>
           <occurrences minimum="0" maximum="1"/>
         </input>
+
+        <input type="TextLine" name="timezone">
+          <label>Feed Time Zone</label>
+          <help-text>For a complete list of time zones, see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</help-text>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
+
         <input type="TextLine" name="mapBody">
           <label>BETA - NOT USED: Full body</label>
           <help-text>Default mapping: data.body, data.html, data.text</help-text>
