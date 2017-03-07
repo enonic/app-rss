@@ -15,11 +15,10 @@ buildscript {
 
 apply plugin: 'com.enonic.xp.app'
 apply plugin: 'maven'
-apply plugin: 'com.enonic.defaults'
 
 app {
     name = project.appName
-    displayName = project.displayName
+    displayName = 'RSS feeds'
     vendorName = 'Enonic AS'
     vendorUrl = 'http://enonic.com'
 }
@@ -28,6 +27,8 @@ dependencies {
     compile "com.enonic.xp:core-api:${xpVersion}"
     compile "com.enonic.xp:portal-api:${xpVersion}"
     include "com.enonic.xp:lib-portal:${xpVersion}"
+    include "com.enonic.xp:lib-auth:${xpVersion}"
+    include "com.enonic.xp:lib-context:${xpVersion}"
     include "com.enonic.xp:lib-content:${xpVersion}"
     include "com.enonic.xp:lib-thymeleaf:${xpVersion}"
     include "com.enonic.xp:lib-xslt:${xpVersion}"

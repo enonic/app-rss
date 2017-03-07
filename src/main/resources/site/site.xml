@@ -2,7 +2,7 @@
 <site>
 	<config>
 		<input type="ComboBox" name="updatePeriod">
-        <label>BETA - NOT USED: Default SY Update period</label>
+        <label>Deault SY Update period</label>
         <occurrences minimum="0" maximum="1"/>
         <config>
           <option value="hourly">Hourly</option>
@@ -13,7 +13,7 @@
         </config>
       </input>
       <input type="TextLine" name="updateFrequency">
-        <label>BETA - NOT USED: Default SY Update frequency</label>
+        <label>Default SY Update frequency</label>
         <occurrences minimum="0" maximum="1"/>
       </input>
 	</config>

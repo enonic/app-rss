@@ -50,16 +50,19 @@ We use a waterfall technique on fields to use so that if you use the most common
 
 **Title**: [Your setting], `data.title`, `displayName`  
 **Thumbnail**: [Your setting], `data.thumbnail`, `data.picture`, `data.photo`  
-**Description**: [Your setting], `data.preface`, `data.description`, `data.summary`  
+**Description/excerpt**: [Your setting], `data.preface`, `data.description`, `data.summary`  
+**Author**: [Your setting], `data.author`, content creator displayName  
+**Categories**: [Your setting], `data.category`, `data.categories`, `data.tags`  
 **Publish date**: [Your setting], `data.publishDate`, `createdTime`  
-**Full body**: [Your setting], `data.body`, `data.html`, `data.text`  
+**Timezone**: [Your setting], `Etc/UTC`  
+**Full body**: BETA - not used!
 
 * Remember to start with `data.` when mapping custom fields from your content type.
 * If your field name contains special characters, like `-`, then wrap the name correctly: `data['My-super-field!']`
 
 ## Disclaimer
 
-App is still in *BETA*! It's not fully done yet. It works, but some extra features is needed, as well as increased usability, more testing, and minor issues needs fixing. Run in production at your own risk.
+App is still in *BETA*! It's not fully done yet. It works, but some much needed features are needed, as well as increased usability, more testing, and minor issues needs fixing. Run in production at your own risk.
 
 ## Known issues
 
@@ -72,6 +75,7 @@ App is still in *BETA*! It's not fully done yet. It works, but some extra featur
 
 | Version        | XP version |
 | ------------- | ------------- |
+| 0.12.0 | 6.9.3 |
 | 0.11.0 | 6.9.3 |
 | 0.10.2 | 6.7.3 |
 | 0.10.1 | 6.5.0 |
@@ -79,6 +83,16 @@ App is still in *BETA*! It's not fully done yet. It works, but some extra featur
 | 0.9.0 | 6.5.0 |
 
 ## Changelog
+
+### Version 0.12.0
+
+* Added support to timezone (using moment.js). For a complete list of time zones that can be used, see:
+https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+* Added support for author mapping
+* Added support for category mapping
+* Added support for controlling number of feed items to generate
+* Fixed a bug that breaks the RSS feed if the Published Date property is a DateTime with timezone
+* Controller does not run if content is not a RSS Page
 
 ### Version 0.11.0
 

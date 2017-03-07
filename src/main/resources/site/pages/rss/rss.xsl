@@ -11,19 +11,15 @@
 
   <xsl:output method="xml" omit-xml-declaration="no" indent="yes"/>
 
-
-  <xsl:variable name="date-format-string" select="'[FNn,*-3], [D01] [MNn,*-3] [Y0001] [H01]:[m01]:[s01] +0200'"/>
-  <xsl:variable name="lastBuild" select="/root/items/item[1]/modifiedTime"/>
-
   <xsl:template match="/">
-	  <!--<xsl:copy-of select="." />-->
+    <!--<xsl:copy-of select="." />-->
     <rss version="2.0">
       <channel>
         <title><xsl:value-of select="/root/feed/title"/></title>
         <atom:link href="{/root/feed/url}" rel="self" type="application/rss+xml"/>
         <link><xsl:value-of select="/root/feed/url"/></link>
         <description><xsl:value-of select="/root/feed/description"/></description>
-        <lastBuildDate><xsl:value-of select="format-dateTime(xs:dateTime($lastBuild), $date-format-string)"/></lastBuildDate>
+        <lastBuildDate><xsl:value-of select="/root/feed/lastBuild"/></lastBuildDate>
         <language><xsl:value-of select="/root/feed/language"/></language>
         <xsl:if test="/root/feed/updatePeriod and /root/feed/updateFrequency">
           <sy:updatePeriod><xsl:value-of select="/root/feed/updatePeriod"/></sy:updatePeriod>
@@ -46,6 +42,7 @@
         <xsl:value-of select="link"/>
       </link>
 
+
       <xsl:if test="thumbnail">
         <xsl:text disable-output-escaping="yes">&lt;enclosure length="</xsl:text>
         <xsl:value-of select="thumbnail/size" />
@@ -56,21 +53,23 @@
         <xsl:text disable-output-escaping="yes">" /&gt;</xsl:text>
       </xsl:if>
       <pubDate>
-        <xsl:value-of select="format-dateTime(xs:dateTime(publishDate), $date-format-string)"/>
+        <xsl:value-of select="publishDate"/>
       </pubDate>
-      <!--
-            <dc:creator>
-              <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="data/authorName"/><xsl:text
+
+      <xsl:if test="authorName">
+        <dc:creator>
+        <xsl:text disable-output-escaping="yes">
+          &lt;![CDATA[ </xsl:text><xsl:value-of select="authorName"/><xsl:text
                 disable-output-escaping="yes"> ]]&gt;</xsl:text>
-            </dc:creator>
-      -->
-      <!--
-            <xsl:for-each select="data/tags/item | data/categoryNames/item">
-              <category>
-                <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="."/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text>
-              </category>
-            </xsl:for-each>
-      -->
+        </dc:creator>
+      </xsl:if>
+
+      <xsl:for-each select="categories/item">
+        <category>
+          <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="."/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text>
+        </category>
+      </xsl:for-each>
+
       <guid isPermaLink="false">
         <xsl:value-of select="link"/>
       </guid>
