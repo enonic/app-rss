@@ -194,6 +194,7 @@ exports.get = function(req) {
 			}
 
 			// Category handling
+			feedItem.categories = [];
 			var tmpCategories = libs.util.data.forceArray(itemData.categories);
 			log.info(tmpCategories)
 
@@ -207,17 +208,20 @@ exports.get = function(req) {
 							});
 
 							if (categoryContent) {
-								itemData.categories.push(categoryContent.displayName);
+								feedItem.categories.push(categoryContent.displayName);
 							}
 						} else if(category.trim() != ""){
-							itemData.categories.push(category);
+							feedItem.categories.push(category);
 						}
 					}
 				});
 			}
+			// Reset categories to null if empty
+			if (feedItem.categories.length === 0) {
+				feedItem.categories = null;
+			}
 
 			feedItem.title = itemData.title || 'Title missing';
-			feedItem.categories = itemData.categories;
 			feedItem.modifiedTime = posts[i].modifiedTime;
 			feedItem.authorName = itemData.authorName;
 			feedItem.summary = itemData.summary ? removeTags(itemData.summary + '') : "";
