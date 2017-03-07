@@ -50,19 +50,19 @@ We use a waterfall technique on fields to use so that if you use the most common
 
 **Title**: [Your setting], `data.title`, `displayName`  
 **Thumbnail**: [Your setting], `data.thumbnail`, `data.picture`, `data.photo`  
-**Description**: [Your setting], `data.preface`, `data.description`, `data.summary`
-**Author**: [Your setting], `data.author`, content creator displayName
+**Description/excerpt**: [Your setting], `data.preface`, `data.description`, `data.summary`  
+**Author**: [Your setting], `data.author`, content creator displayName  
+**Categories**: [Your setting], `data.category`, `data.categories`, `data.tags`  
 **Publish date**: [Your setting], `data.publishDate`, `createdTime`  
-**Full body**: [Your setting], `data.body`, `data.html`, `data.text`  
-**Categories**: [Your setting], `data.category`, `data.categories`, `data.tags`
-**Timezone**: [Your setting], `Etc/UTC`
+**Timezone**: [Your setting], `Etc/UTC`  
+**Full body**: BETA - not used!
 
 * Remember to start with `data.` when mapping custom fields from your content type.
 * If your field name contains special characters, like `-`, then wrap the name correctly: `data['My-super-field!']`
 
 ## Disclaimer
 
-App is still in *BETA*! It's not fully done yet. It works, but some extra features is needed, as well as increased usability, more testing, and minor issues needs fixing. Run in production at your own risk.
+App is still in *BETA*! It's not fully done yet. It works, but some much needed features are needed, as well as increased usability, more testing, and minor issues needs fixing. Run in production at your own risk.
 
 ## Known issues
 
@@ -88,8 +88,9 @@ App is still in *BETA*! It's not fully done yet. It works, but some extra featur
 
 * Added support to timezone (using moment.js). For a complete list of time zones that can be used, see:
 https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-* Added support to author name. If no fields are set, the content creator displayName is set as authorName
-* Added support to categories list (no domain tag is added, just category names)
+* Added support for author mapping
+* Added support for category mapping
+* Added support for controlling number of feed items to generate
 * Fixed a bug that breaks the RSS feed if the Published Date property is a DateTime with timezone
 * Controller does not run if content is not a RSS Page
 

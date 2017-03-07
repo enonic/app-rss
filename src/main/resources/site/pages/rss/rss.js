@@ -102,7 +102,6 @@ exports.get = function(req) {
 	} else {
 
 		var rssFeed = {}; // General info about the feed
-
 		rssFeed.title = content.displayName;
 		rssFeed.description = site.data.description;
 		rssFeed.counter = content.data.counter || 20;
