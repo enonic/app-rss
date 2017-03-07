@@ -83,22 +83,25 @@ exports.get = function(req) {
 	var site = libs.portal.getSite();
 	var content = libs.portal.getContent();
 
-	if(content.type != app.name+":rss-page"){
+	// Don't run RSS rendering if not used on a RSS content
+	if (content.type != app.name + ":rss-page") {
+
 		var timestamp = Date.now();
-		var view = resolve('invalid-content.html');
+		view = resolve('invalid-content.html');
 
 		var params = {
 			assetsUri: libs.portal.url({path: "/admin/assets/" + timestamp}),
-			message: "Invalid Content Type. <br /> You need to create a RSS Page and configure it in order to see the RSS Feed XML"
+			message: "Invalid Content Type!<br /><br />You need to create a RSS Page and configure it in order to see the RSS Feed XML."
 		};
 
 		return {
 			contentType: 'text/html',
 			body: libs.thymeleaf.render(view, params)
 		};
+
 	} else {
+
 		var rssFeed = {}; // General info about the feed
-		var view = resolve('rss.xsl');
 
 		rssFeed.title = content.displayName;
 		rssFeed.description = site.data.description;
@@ -112,7 +115,7 @@ exports.get = function(req) {
 		var settings = {
 			title: commaStringToArray(content.data.mapTitle) || ['data.title', 'displayName'],
 			summary: commaStringToArray(content.data.mapSummary) || ['data.preface', 'data.intro', 'data.description', 'data.summary'],
-			author: commaStringToArray(content.data.mapAuthor) || ['data.author'],
+			author: commaStringToArray(content.data.mapAuthor) || ['data.author', 'creator'],
 			thumbnail: commaStringToArray(content.data.mapThumbnail) || ['data.thumbnail', 'data.picture', 'data.photo'],
 			date: commaStringToArray(content.data.mapDate) || ['publish.from', 'data.publishDate', 'createdTime'],
 			body: commaStringToArray(content.data.mapBody) || ['data.body', 'data.html', 'data.text'],
@@ -147,7 +150,7 @@ exports.get = function(req) {
 		searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
 		searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
 
-
+		// Fetch our feed items!
 		var result = libs.content.query({
 			start: 0,
 			count: 20,
@@ -157,9 +160,7 @@ exports.get = function(req) {
 				content.data.contenttype // NOTE TO SELF: Don't even think about making RSS support multiple content types, the field mapping would be insane!
 			]
 		});
-
 		var posts = result.hits;
-
 		var postsLength = posts.length;
 		var feedItems = [];
 
@@ -173,15 +174,27 @@ exports.get = function(req) {
 				body: findValueInJson(posts[i], settings.body),
 				authorName: findValueInJson(posts[i], settings.author),
 				thumbnailId: findValueInJson(posts[i], settings.thumbnail),
-				categories: []
+				categories: findValueInJson(posts[i], settings.categories)
 			};
 
-			if(!itemData.authorName || itemData.authorName == "" || itemData.authorName == null){
-				var userCreator = libs.auth.getPrincipal(posts[i].creator);
+			// Content creator is the only user we can find, lookup username
+			if (/^(user:.*)$/.test(itemData.authorName)) {
+				var userCreator = libs.auth.getPrincipal(itemData.authorName);
 				itemData.authorName = userCreator.displayName;
+			} else {
+				// Author is mapped to another content, lookup
+				if (/^(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})$/.test(itemData.authorName)) {
+					var authorContent = libs.content.get({
+						key: itemData.authorName
+					});
+					if (authorContent) {
+						itemData.authorName = authorContent.displayName;
+					}
+				}
 			}
 
-			var tmpCategories = libs.util.data.forceArray(findValueInJson(posts[i], settings.categories));
+			// Category handling
+			var tmpCategories = libs.util.data.forceArray(itemData.categories);
 			log.info(tmpCategories)
 
 			if(JSON.stringify(tmpCategories) != "[null]") {
