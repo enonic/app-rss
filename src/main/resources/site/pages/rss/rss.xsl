@@ -15,10 +15,12 @@
     <!--<xsl:copy-of select="." />-->
     <rss version="2.0">
       <channel>
-        <title><xsl:value-of select="/root/feed/title"/></title>
+        <title><xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text>
+		  		<xsl:value-of select="/root/feed/title"/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text></title>
         <atom:link href="{/root/feed/url}" rel="self" type="application/rss+xml"/>
         <link><xsl:value-of select="/root/feed/url"/></link>
-        <description><xsl:value-of select="/root/feed/description"/></description>
+        <description><xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text>
+		  		<xsl:value-of select="/root/feed/description"/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text></description>
         <lastBuildDate><xsl:value-of select="/root/feed/lastBuild"/></lastBuildDate>
         <language><xsl:value-of select="/root/feed/language"/></language>
         <xsl:if test="/root/feed/updatePeriod and /root/feed/updateFrequency">
@@ -35,8 +37,8 @@
   <xsl:template match="items/item">
     <item>
       <title>
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="title"/><xsl:text
-              disable-output-escaping="yes">]]&gt;</xsl:text>
+        <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="title"/><xsl:text
+              disable-output-escaping="yes"> ]]&gt;</xsl:text>
       </title>
       <link>
         <xsl:value-of select="link"/>
@@ -56,10 +58,8 @@
       </pubDate>
 
       <xsl:if test="authorName">
-        <dc:creator>
-        <xsl:text disable-output-escaping="yes">
-          &lt;![CDATA[ </xsl:text><xsl:value-of select="authorName"/><xsl:text
-                disable-output-escaping="yes"> ]]&gt;</xsl:text>
+        <dc:creator><xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text>
+		  		<xsl:value-of select="authorName"/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text>
         </dc:creator>
       </xsl:if>
 
@@ -74,8 +74,8 @@
       </guid>
 
       <description>
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="summary"/><xsl:text
-              disable-output-escaping="yes">]]&gt;</xsl:text>
+        <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="summary"/><xsl:text
+              disable-output-escaping="yes"> ]]&gt;</xsl:text>
       </description>
       <!--
             <content:encoded>
