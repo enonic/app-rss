@@ -164,6 +164,12 @@ exports.get = function(req) {
 		var postsLength = posts.length;
 		var feedItems = [];
 
+		// Set last build for the feed equal to the top article result or the rss-page modifiedDate
+		var lastBuild = new Date(Math.max.apply(null, posts.map(function(e) {
+			return new Date(posts.modifiedTime);
+		})));
+		rssFeed.lastBuild = feedItems.length > 0 ? lastBuild : libs.moment(content.modifiedTime, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
+
 		for (var i = 0; i < postsLength; i++) {
 
 			var feedItem = {};
@@ -254,9 +260,6 @@ exports.get = function(req) {
 			// Done, add item to array
 			feedItems.push(feedItem);
 		}
-
-		// Set last build for the feed equal to the top article result or the rss-page modifiedDate
-		rssFeed.lastBuild = feedItems.length > 0 ? feedItems[0].publishDate : libs.moment(content.modifiedTime, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
 
 		var params = {
 			feed: rssFeed,
