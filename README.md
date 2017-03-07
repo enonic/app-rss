@@ -60,6 +60,8 @@ We use a waterfall technique on fields to use so that if you use the most common
 * Remember to start with `data.` when mapping custom fields from your content type.
 * If your field name contains special characters, like `-`, then wrap the name correctly: `data['My-super-field!']`
 
+**Author** and **category** mapping is "smart". It will handle mapped fields just containing strings (as-is), but it will also handle related content (extracting their displayName value). In addition, the author data will handle being sent a specific user (like with the content `creator` data) if the format is something like `user:system:su` and then extract that user's name.
+
 ## Disclaimer
 
 App is still in *BETA*! It's not fully done yet. It works, but some much needed features are needed, as well as increased usability, more testing, and minor issues needs fixing. Run in production at your own risk.
