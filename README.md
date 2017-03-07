@@ -68,10 +68,10 @@ App is still in *BETA*! It's not fully done yet. It works, but some much needed 
 
 ## Known issues
 
-* DateTime fields using timezone can not be mapped
-* Settings for RSS "SY" is not used
+* RSS feed's settings for RSS "SY" is not used
+* App's default settings for RSS "SY" is not used
 * "Full body" setting is not used, nor displayed in RSS feeds
-* Too easy to make app crash when not sufficient data is sent to it
+* If no description found for feed item, it will be empty
 
 ## Releases and Compatibility
 
