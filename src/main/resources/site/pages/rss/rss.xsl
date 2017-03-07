@@ -12,7 +12,6 @@
   <xsl:output method="xml" omit-xml-declaration="no" indent="yes"/>
 
   <xsl:template match="/">
-    <!--<xsl:copy-of select="." />-->
     <rss version="2.0">
       <channel>
         <title><xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text>

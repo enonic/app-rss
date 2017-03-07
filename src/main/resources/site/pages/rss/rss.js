@@ -265,7 +265,7 @@ exports.get = function(req) {
 			feed: rssFeed,
 			items: feedItems
 		};
-		log.info(JSON.stringify(params, null, 3));
+//		log.info(JSON.stringify(params, null, 3));
 
 		// Render
 		var body = libs.xslt.render(view, params);
