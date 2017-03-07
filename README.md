@@ -91,8 +91,11 @@ https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 * Added support for author mapping
 * Added support for category mapping
 * Added support for controlling number of feed items to generate
+* Proper handling of RSS feed title (from content title)
 * Fixed a bug that breaks the RSS feed if the Published Date property is a DateTime with timezone
 * Controller does not run if content is not a RSS Page
+* Upgrade to Gradle 3.4
+* **Breaking change** removed the field "title" from RSS content type (using displayName instead).
 
 ### Version 0.11.0
 

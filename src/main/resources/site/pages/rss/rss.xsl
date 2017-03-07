@@ -42,7 +42,6 @@
         <xsl:value-of select="link"/>
       </link>
 
-
       <xsl:if test="thumbnail">
         <xsl:text disable-output-escaping="yes">&lt;enclosure length="</xsl:text>
         <xsl:value-of select="thumbnail/size" />

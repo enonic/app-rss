@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <content-type>
   <display-name>RSS feed</display-name>
-  <content-display-name-script>$('title')</content-display-name-script>
   <super-type>base:structured</super-type>
   <form>
     <field-set name="settings">
       <label>Settings</label>
       <items>
-        <input type="TextLine" name="title">
-          <label>Name of feed</label>
-          <occurrences minimum="1" maximum="1"/>
-        </input>
         <input type="ContentTypeFilter" name="contenttype">
           <label>ContentType to use</label>
           <occurrences minimum="1" maximum="1"/>
