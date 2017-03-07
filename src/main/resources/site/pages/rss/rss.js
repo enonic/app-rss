@@ -105,6 +105,7 @@ exports.get = function(req) {
 
 		rssFeed.title = content.displayName;
 		rssFeed.description = site.data.description;
+		rssFeed.counter = content.data.counter || 20;
 		rssFeed.language = content.data.language || 'en-US';
 		rssFeed.url = libs.portal.pageUrl({
 			path: content._path,
@@ -153,7 +154,7 @@ exports.get = function(req) {
 		// Fetch our feed items!
 		var result = libs.content.query({
 			start: 0,
-			count: 20,
+			count: rssFeed.counter,
 			query: query,
 			sort: searchDate + ' DESC, createdTime DESC',
 			contentTypes: [
@@ -196,21 +197,18 @@ exports.get = function(req) {
 			// Category handling
 			feedItem.categories = [];
 			var tmpCategories = libs.util.data.forceArray(itemData.categories);
-			log.info(tmpCategories)
 
-			if(JSON.stringify(tmpCategories) != "[null]") {
-				tmpCategories.forEach(function (category) {
-					log.info(category+"  ||   "+typeof category);
-					if(typeof category === "string") {
+			if (JSON.stringify(tmpCategories) != "[null]") {
+				tmpCategories.forEach( function(category) {
+					if (typeof category === "string") {
 						if (/^(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})$/.test(category)) {
 							var categoryContent = libs.content.get({
 								key: category
 							});
-
 							if (categoryContent) {
 								feedItem.categories.push(categoryContent.displayName);
 							}
-						} else if(category.trim() != ""){
+						} else if (category.trim() != "") {
 							feedItem.categories.push(category);
 						}
 					}
@@ -230,12 +228,11 @@ exports.get = function(req) {
 				type: 'absolute'
 			});
 
-			// Adding config for timezone on datetime after contents are already created will stop content from being editable in XP 6.4
-			// So we need to do it the hacky way
+			// Timezone handling
 			feedItem.publishDate = itemData.date ? (itemData.date.indexOf("Z") != -1 ? itemData.date : itemData.date + ':08.965Z') : posts[i].createdTime;
-
 			feedItem.publishDate = libs.moment(feedItem.publishDate, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
 
+			// Thumbnails
 			if (itemData.thumbnailId) {
 				var thumbnailContent = libs.content.get({
 					key: itemData.thumbnailId
@@ -259,9 +256,8 @@ exports.get = function(req) {
 			feedItems.push(feedItem);
 		}
 
-		//Set last build for the feed equal to the top article result or the rss-page modifiedDate
-		rssFeed.lastBuild = feedItems.length > 0 ?  feedItems[0].publishDate : libs.moment(content.modifiedTime, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
-
+		// Set last build for the feed equal to the top article result or the rss-page modifiedDate
+		rssFeed.lastBuild = feedItems.length > 0 ? feedItems[0].publishDate : libs.moment(content.modifiedTime, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
 
 		var params = {
 			feed: rssFeed,
