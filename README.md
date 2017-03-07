@@ -64,7 +64,7 @@ We use a waterfall technique on fields to use so that if you use the most common
 
 ## Disclaimer
 
-App is still in *BETA*! It's not fully done yet. It works, but some much needed features are needed, as well as increased usability, more testing, and minor issues needs fixing. Run in production at your own risk.
+App is still in *BETA*! It works, but some much needed features are needed, as well as increased usability, more testing, and minor issues needs fixing. Use it in production at your own risk.
 
 ## Known issues
 
