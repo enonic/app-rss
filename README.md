@@ -68,10 +68,11 @@ App is still in *BETA*! It works, but some much needed features are needed, as w
 
 ## Known issues
 
-* RSS feed's settings for RSS "SY" is not used
-* App's default settings for RSS "SY" is not used
-* "Full body" setting is not used, nor displayed in RSS feeds
-* If no description found for feed item, it will be empty
+* RSS feed's settings for RSS "SY" is not used.
+* App's default settings for RSS "SY" is not used.
+* "Full body" setting is not used, nor displayed in RSS feeds.
+* If no description found for feed item, it will be empty.
+* Setting for TimeZone on each RSS content is temporary, it will be removed/replaced.
 
 ## Releases and Compatibility
 
@@ -94,10 +95,11 @@ https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 * Added support for category mapping
 * Added support for controlling number of feed items to generate
 * Proper handling of RSS feed title (from content title)
-* Fixed a bug that breaks the RSS feed if the Published Date property is a DateTime with timezone
+* **Critical** Fixed a bug that breaks the RSS feed if the Published Date property is a DateTime with timezone
 * Fix so that controller does not run if content is not a RSS Page (avoids crash)
 * Upgrade to Gradle 3.4
 * **Breaking change** removed the field "title" from RSS content type (using displayName instead).
+* **Future breaking change** added a quickfix setting for TimeZone selection on RSS content. This *will* be removed in next release as there are better ways to solve this.
 
 ### Version 0.11.0
 
