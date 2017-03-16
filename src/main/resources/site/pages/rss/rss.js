@@ -10,6 +10,10 @@ var libs = {
 
 var view = resolve('rss.xsl');
 
+function removeLastDouble(str) {
+	var pos = str.lastIndexOf(':');
+	return str.substring(0,pos) + str.substring(pos+1);
+}
 
 function commaStringToArray(str) {
 	if ( !str || str == '' || str == null) return null;
@@ -168,7 +172,7 @@ exports.get = function(req) {
 		var lastBuild = new Date(Math.max.apply(null, posts.map(function(e) {
 			return new Date(posts.modifiedTime);
 		})));
-		rssFeed.lastBuild = feedItems.length > 0 ? lastBuild : libs.moment(content.modifiedTime, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
+		rssFeed.lastBuild = feedItems.length > 0 ? lastBuild : removeLastDouble(libs.moment(content.modifiedTime, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z"));
 
 		for (var i = 0; i < postsLength; i++) {
 
@@ -235,7 +239,7 @@ exports.get = function(req) {
 
 			// Timezone handling
 			feedItem.publishDate = itemData.date ? (itemData.date.indexOf("Z") != -1 ? itemData.date : itemData.date + ':08.965Z') : posts[i].createdTime; // ".08.965Z" is just a random string to make format valid ... needs better solution.
-			feedItem.publishDate = libs.moment(feedItem.publishDate, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
+			feedItem.publishDate = removeLastDouble(libs.moment(feedItem.publishDate, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z"));
 
 			// Thumbnails
 			if (itemData.thumbnailId) {
