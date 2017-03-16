@@ -14,6 +14,7 @@ buildscript {
 }
 
 apply plugin: 'com.enonic.xp.app'
+apply plugin: 'com.enonic.defaults'
 apply plugin: 'maven'
 
 app {
