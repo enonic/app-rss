@@ -63,7 +63,7 @@
         </input>
 
         <input type="TextLine" name="timezone">
-          <label>Feed Time Zone</label>
+          <label>BETA - WILL BE REMOVED: Feed Time Zone</label>
           <help-text>For a complete list of time zones, see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones</help-text>
           <occurrences minimum="0" maximum="1"/>
         </input>
