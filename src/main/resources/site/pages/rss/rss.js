@@ -238,8 +238,16 @@ exports.get = function(req) {
 			});
 
 			// Timezone handling
-			feedItem.publishDate = itemData.date ? (itemData.date.indexOf("Z") != -1 ? itemData.date : itemData.date + ':08.965Z') : posts[i].createdTime; // ".08.965Z" is just a random string to make format valid ... needs better solution.
-			feedItem.publishDate = removeLastColonFromString(libs.moment(feedItem.publishDate, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z"));
+			var properDate = itemData.date ? (itemData.date.indexOf("Z") != -1 ? itemData.date : itemData.date + ':08.965Z') : posts[i].createdTime; // ".08.965Z" is just a random string to make format valid ... needs better solution.
+			// Format date properly
+			properDate = libs.moment(properDate, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
+			// Remove use of : from timezone setting, if added/used (not compatible with XSLT)
+			if (settings.timeZone) {
+				if (settings.timeZone.indexOf(":") > 0) {
+					properDate = removeLastColonFromString(properDate);
+				}
+			}
+			feedItem.publishDate = properDate;
 
 			// Thumbnails
 			if (itemData.thumbnailId) {
@@ -269,10 +277,19 @@ exports.get = function(req) {
 			feed: rssFeed,
 			items: feedItems
 		};
-//		log.info(JSON.stringify(params, null, 3));
+
+// 	libs.util.log(params);
+//		return;
+
+		var body = "";
+		try {
+		    body = libs.xslt.render(view, params);
+		} catch (e) {
+			e.printStackTrace()
+		}
 
 		// Render
-		var body = libs.xslt.render(view, params);
+
 		return {
 			contentType: 'text/xml',
 			body: body
