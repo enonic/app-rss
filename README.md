@@ -87,6 +87,12 @@ App is still in *BETA*! It works, but some much needed features are needed, as w
 
 ## Changelog
 
+### Version 0.12.3
+
+* *Don't use 0.12.0, 0.12.1, or 0.12.2!*
+* Fix for date format, was not valid RSS on the timezone part
+* Improved code for date and time handling
+
 ### Version 0.12.0
 
 * Added support to timezone (using moment.js). For a complete list of time zones that can be used, see:

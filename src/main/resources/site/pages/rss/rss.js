@@ -10,11 +10,6 @@ var libs = {
 
 var view = resolve('rss.xsl');
 
-function removeLastColonFromString(str) {
-	var pos = str.lastIndexOf(':');
-	return str.substring(0,pos) + str.substring(pos+1);
-}
-
 function commaStringToArray(str) {
 	if ( !str || str == '' || str == null) return null;
 	var commas = str || '';
@@ -237,16 +232,9 @@ exports.get = function(req) {
 				type: 'absolute'
 			});
 
-			// Timezone handling
-			var properDate = itemData.date ? (itemData.date.indexOf("Z") != -1 ? itemData.date : itemData.date + ':08.965Z') : posts[i].createdTime; // ".08.965Z" is just a random string to make format valid ... needs better solution.
-			// Format date properly
-			properDate = libs.moment(properDate, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss Z");
-			// Remove use of : from timezone setting, if added/used (not compatible with XSLT)
-			if (settings.timeZone) {
-				if (settings.timeZone.indexOf(":") > 0) {
-					properDate = removeLastColonFromString(properDate);
-				}
-			}
+			// Timezone handling and formatting
+			var properDate = itemData.date ? itemData.date : posts[i].createdTime;
+			properDate = libs.moment(properDate, 'YYYY-MM-DD[T]HH:mm:ss[.]SSS[Z]').tz(settings.timeZone).format("ddd, DD MMM YYYY HH:mm:ss ZZ");
 			feedItem.publishDate = properDate;
 
 			// Thumbnails
