@@ -87,9 +87,9 @@ App is still in *BETA*! It works, but some much needed features are needed, as w
 
 ## Changelog
 
-### Version 0.12.3
+### Version 0.12.4
 
-* *Don't use 0.12.0, 0.12.1, or 0.12.2!*
+* *Don't use 0.12.0, 0.12.1, 0.12.2, or 0.12.3!*
 * Fix for date format, was not valid RSS on the timezone part
 * Improved code for date and time handling
 
