@@ -281,8 +281,15 @@ exports.get = function(req) {
 // 	libs.util.log(params);
 //		return;
 
+		var body = "";
+		try {
+		    body = libs.xslt.render(view, params);
+		} catch (e) {
+			e.printStackTrace()
+		}
+
 		// Render
-		var body = libs.xslt.render(view, params);
+
 		return {
 			contentType: 'text/xml',
 			body: body
