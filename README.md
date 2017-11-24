@@ -87,6 +87,10 @@ App is still in *BETA*! It works, but some much needed features are needed, as w
 
 ## Changelog
 
+### Version 0.12.5
+
+* Fixed bug with unsafe use of data on owner (used as fallback in 0.12.x when no author field defined). If you had deleted a user that owned a content, and used this fallback, the RSS feed would crash.
+
 ### Version 0.12.4
 
 * *Don't use 0.12.0, 0.12.1, 0.12.2, or 0.12.3!*
