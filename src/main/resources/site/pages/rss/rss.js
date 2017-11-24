@@ -185,7 +185,9 @@ exports.get = function(req) {
 			// Content creator is the only user we can find, lookup username
 			if (/^(user:.*)$/.test(itemData.authorName)) {
 				var userCreator = libs.auth.getPrincipal(itemData.authorName);
-				itemData.authorName = userCreator.displayName;
+				if (userCreator) {
+					itemData.authorName = userCreator.displayName;
+				}
 			} else {
 				// Author is mapped to another content, lookup
 				if (/^(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})$/.test(itemData.authorName)) {
