@@ -1,10 +1,10 @@
 var libs = {
 	content: require('/lib/xp/content'),
 	portal: require('/lib/xp/portal'),
+	auth: require('/lib/xp/auth'),
 	xslt: require('/lib/xp/xslt'),
 	util: require('/lib/enonic/util'),
 	thymeleaf: require('/lib/xp/thymeleaf'),
-	auth: require('/lib/xp/auth'),
 	moment: require("/lib/moment-timezone")
 };
 
@@ -89,8 +89,7 @@ exports.get = function(req) {
 		view = resolve('invalid-content.html');
 
 		var params = {
-			assetsUri: libs.portal.url({path: "/admin/assets/" + timestamp}),
-			message: "Invalid Content Type!<br /><br />You need to create a RSS Page and configure it in order to see the RSS Feed XML."
+			message: "Invalid Content Type!<br /><br />You need to create a new content of type \"RSS Page\" and configure it, in order to see the RSS Feed."
 		};
 
 		return {

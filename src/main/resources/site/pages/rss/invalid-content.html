@@ -4,17 +4,35 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 	<meta name="viewport" content="width=device-width, user-scalable=no">
-	<meta name="theme-color" content="#ffffff">
 	<title>RSS app</title>
-	<link rel="stylesheet" type="text/css" data-th-href="${assetsUri}+'/common/styles/_all.css'">
+	<style>
+		html, body {
+			margin: 0;
+			min-height: 100vh;
+		}
+		main {
+			height: 100vh;
+			display: flex;
+			text-align: center;
+			flex-flow: row wrap;
+			align-content: center;
+		}
+		p {
+			font-size: 21px;
+			font-family: "Open Sans", sans-serif;
+			color: #9e9e9e;
+			width: 100%;
+		}
+		a {
+			opacity: 0.6;
+		}
+	</style>
 </head>
 <body>
 
-	<div id="ContentItemStatisticsPanel" class="panel item-statistics-panel content-item-statistics-panel" style="display: block;">
-		<div id="ContentItemPreviewPanel" class="panel item-preview-panel content-item-preview-panel _540-720 no-preview">
-			<p class="no-preview-message" data-th-utext="${message}"></p>
-		</div>
-	</div>
+	<main>
+		<p class="no-preview-message" data-th-utext="${message}"></p>
+	</main>
 
 </body>
 </html>
