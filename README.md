@@ -78,7 +78,8 @@ App is still in *BETA*! It works, but some much needed features are needed, as w
 
 | Version        | XP version |
 | ------------- | ------------- |
-| 0.12.0 | 6.9.3 |
+| 0.13.0 | 6.13.1 |
+| 0.12.0 | 6.9.3 - 6.12 |
 | 0.11.0 | 6.9.3 |
 | 0.10.2 | 6.7.3 |
 | 0.10.1 | 6.5.0 |
@@ -86,6 +87,12 @@ App is still in *BETA*! It works, but some much needed features are needed, as w
 | 0.9.0 | 6.5.0 |
 
 ## Changelog
+
+### Version 0.13.0
+
+* Upgrade to XP 6.13.
+* Upgrade to Gradle 4.
+* Styling improvements to invalid content-view.
 
 ### Version 0.12.5
 
