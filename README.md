@@ -79,7 +79,7 @@ App is still in _BETA_! It works, but some much needed features are needed, as w
 
 | Version | XP version   |
 | ------- | ------------ |
-| 0.13.0  | 6.13.1       |
+| 0.13.x  | 6.13.1       |
 | 0.12.0  | 6.9.3 - 6.12 |
 | 0.11.0  | 6.9.3        |
 | 0.10.2  | 6.7.3        |
@@ -91,7 +91,7 @@ App is still in _BETA_! It works, but some much needed features are needed, as w
 
 ### Version 0.13.1
 
-- Upgrade dependencies.
+- Upgrade dependencies with XSLT library to output error descriptions.
 
 ### Version 0.13.0
 
