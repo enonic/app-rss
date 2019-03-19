@@ -267,9 +267,6 @@ exports.get = function(req) {
 			items: feedItems
 		};
 
-// 	libs.util.log(params);
-//		return;
-
 		var body = "";
 		try {
 		    body = libs.xslt.render(view, params);
@@ -277,10 +274,8 @@ exports.get = function(req) {
 			e.printStackTrace()
 		}
 
-		// Render
-
 		return {
-			contentType: 'text/xml',
+			contentType: 'application/xml',
 			body: body
 		};
 	}
