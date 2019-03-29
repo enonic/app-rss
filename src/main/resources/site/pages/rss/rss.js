@@ -2,9 +2,9 @@ var libs = {
 	content: require('/lib/xp/content'),
 	portal: require('/lib/xp/portal'),
 	auth: require('/lib/xp/auth'),
-	xslt: require('/lib/xp/xslt'),
-	util: require('/lib/enonic/util'),
-	thymeleaf: require('/lib/xp/thymeleaf'),
+    xslt: require('/lib/xslt'),
+    util: require('/lib/util'),
+    thymeleaf: require('/lib/thymeleaf'),
 	moment: require("/lib/moment-timezone")
 };
 

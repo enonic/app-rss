@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-	<config>
+  <form>
 		<input type="ComboBox" name="updatePeriod">
         <label>BETA - NOT USED: Default SY Update period</label>
         <occurrences minimum="0" maximum="1"/>
@@ -16,8 +16,8 @@
         <label>BETA - NOT USED: Default SY Update frequency</label>
         <occurrences minimum="0" maximum="1"/>
       </input>
-	</config>
-	<filters>
-		<response-filter name="add-meta" order="80"/>
-	</filters>
+  </form>
+  <processors>
+    <response-processor name="add-meta" order="80"/>
+  </processors>
 </site>
