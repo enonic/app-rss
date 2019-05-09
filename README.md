@@ -2,7 +2,7 @@
 
 **Beta software!**
 
-This Enonic XP 6 application adds RSS capabilities to your [Enonic XP](https://github.com/enonic/xp) site. With it you can create RSS feeds (as content) and map them to any Content Type (so you can have multiple feeds).
+This Enonic XP application adds RSS capabilities to your [Enonic XP](https://github.com/enonic/xp) site. With it you can create RSS feeds (as content) and map them to any Content Type (so you can have multiple feeds).
 
 The App adds:
 
@@ -20,10 +20,12 @@ Head to the [Enonic Market](https://market.enonic.com/vendors/enonic/com.enonic.
 After installing the app on your XP server, this is how you set it up to use it.
 
 1. Add App to any site
-2. Create a Page Template using the new RSS page controller (support: this app's RSS content type)
-3. Create a new content of type RSS
-4. Configure this content to map the content type you want to fetch
-5. Done
+2. Create a new Page Template in Content Studio
+3. Select RSS page controller for the new template
+4. Select "RSS feed" content type in "Supports" field for the new template
+5. Create a new content of type RSS
+6. Configure this content to map the content type you want to fetch
+7. Done
 
 ### Page Template
 
@@ -79,6 +81,7 @@ App is still in _BETA_! It works, but some much needed features are needed, as w
 
 | Version | XP version   |
 | ------- | ------------ |
+| 1.0.0  | 7.0.0       |
 | 0.13.x  | 6.13.1       |
 | 0.12.0  | 6.9.3 - 6.12 |
 | 0.11.0  | 6.9.3        |
@@ -88,6 +91,10 @@ App is still in _BETA_! It works, but some much needed features are needed, as w
 | 0.9.0   | 6.5.0        |
 
 ## Changelog
+
+### Version 1.0.0
+
+- Upgrade to XP7
 
 ### Version 0.13.1
 

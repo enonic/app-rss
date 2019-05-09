@@ -2,20 +2,20 @@
 <site>
   <form>
 		<input type="ComboBox" name="updatePeriod">
-        <label>BETA - NOT USED: Default SY Update period</label>
-        <occurrences minimum="0" maximum="1"/>
-        <config>
-          <option value="hourly">Hourly</option>
-          <option value="daily">Daily</option>
-          <option value="weekly">Weekly</option>
-          <option value="monthly">Monthly</option>
-          <option value="yearly">Yearly</option>
-        </config>
-      </input>
-      <input type="TextLine" name="updateFrequency">
-        <label>BETA - NOT USED: Default SY Update frequency</label>
-        <occurrences minimum="0" maximum="1"/>
-      </input>
+      <label>BETA - NOT USED: Default SY Update period</label>
+      <occurrences minimum="0" maximum="1"/>
+      <config>
+        <option value="hourly">Hourly</option>
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+      </config>
+    </input>
+    <input type="TextLine" name="updateFrequency">
+      <label>BETA - NOT USED: Default SY Update frequency</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
   </form>
   <processors>
     <response-processor name="add-meta" order="80"/>
