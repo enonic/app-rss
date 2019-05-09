@@ -1,15 +1,15 @@
 var libs = {
 	portal: require('/lib/xp/portal'),
 	content: require('/lib/xp/content'),
-	thymeleaf: require('/lib/xp/thymeleaf'),
-	util: require('/lib/enonic/util')
+    thymeleaf: require('/lib/thymeleaf'),
+    util: require('/lib/util')
 };
 
 var conf = {
 	view: resolve('add-meta.html')
 };
 
-exports.responseFilter = function(req, res) {
+exports.responseProcessor = function (req, res) {
 	var site = libs.portal.getSite();
 
 	// Find all RSS feeds active on the current site
