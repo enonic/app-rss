@@ -131,7 +131,11 @@ exports.get = function(req) {
 			content.data.include = libs.util.data.forceArray(content.data.include);
 			var includeLength = content.data.include.length;
 			for (var i = 0; i < includeLength; i++) {
-				query += ' AND _path LIKE "' + contentRoot + content.data.include[i] + '/*"';
+				if(i > 0) {
+					query += ' OR _path LIKE "' + contentRoot + content.data.include[i] + '/*"';
+				} else {
+					query += ' AND _path LIKE "' + contentRoot + content.data.include[i] + '/*"';
+				}
 			}
 		}
 		// Content paths to exclude
