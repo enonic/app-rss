@@ -18,6 +18,6 @@
     </input>
   </form>
   <processors>
-    <response-processor name="add-meta" order="80"/>
+    <!-- <response-processor name="add-meta" order="80"/> -->
   </processors>
 </site>
