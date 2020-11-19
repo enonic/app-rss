@@ -124,18 +124,15 @@ exports.get = function(req) {
 		// Setup for path filtering
 		var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
 		var contentRoot = '/content' + folderPath + '/';
-		var query = '_path LIKE "' + contentRoot + '*"';
+		var query = '_path LIKE "' + contentRoot + '*" ';
 
 		// Content paths to include
 		if (content.data.include) {
 			content.data.include = libs.util.data.forceArray(content.data.include);
 			var includeLength = content.data.include.length;
 			for (var i = 0; i < includeLength; i++) {
-				if(i > 0) {
-					query += ' OR _path LIKE "' + contentRoot + content.data.include[i] + '/*"';
-				} else {
-					query += ' AND _path LIKE "' + contentRoot + content.data.include[i] + '/*"';
-				}
+				query += (i == 0) ? 'AND' : 'OR';
+				query += ' _path LIKE "' + contentRoot + content.data.include[i] + '/*"';
 			}
 		}
 		// Content paths to exclude
@@ -273,7 +270,7 @@ exports.get = function(req) {
 
 		var body = "";
 		try {
-		    body = libs.xslt.render(view, params);
+			body = libs.xslt.render(view, params);
 		} catch (e) {
 			e.printStackTrace()
 		}
