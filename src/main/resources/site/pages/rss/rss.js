@@ -124,14 +124,14 @@ exports.get = function(req) {
 		// Setup for path filtering
 		var folderPath = site._path; // Only allow content from current Site to populate the RSS feed.
 		var contentRoot = '/content' + folderPath + '/';
-		var query = '_path LIKE "' + contentRoot + '*" ';
+		var query = '_path LIKE "' + contentRoot + '*"';
 
 		// Content paths to include
 		if (content.data.include) {
 			content.data.include = libs.util.data.forceArray(content.data.include);
 			var includeLength = content.data.include.length;
 			for (var i = 0; i < includeLength; i++) {
-				query += (i == 0) ? 'AND' : 'OR';
+				query += (i == 0) ? ' AND' : ' OR';
 				query += ' _path LIKE "' + contentRoot + content.data.include[i] + '/*"';
 			}
 		}
@@ -148,6 +148,8 @@ exports.get = function(req) {
 		var searchDate = content.data.mapDate || 'publish.from';
 		searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
 		searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
+
+		log.info(query);
 
 		// Fetch our feed items!
 		var result = libs.content.query({
@@ -267,6 +269,8 @@ exports.get = function(req) {
 			feed: rssFeed,
 			items: feedItems
 		};
+
+		log.info(JSON.stringify(params, null, 4));
 
 		var body = "";
 		try {
