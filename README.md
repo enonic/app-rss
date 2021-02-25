@@ -81,7 +81,7 @@ App is still in _BETA_! It works, but some much needed features are needed, as w
 
 | Version | XP version   |
 | ------- | ------------ |
-| 1.0.0  | 7.0.0       |
+| 1.0.x  | 7.0.0       |
 | 0.13.x  | 6.13.1       |
 | 0.12.0  | 6.9.3 - 6.12 |
 | 0.11.0  | 6.9.3        |
