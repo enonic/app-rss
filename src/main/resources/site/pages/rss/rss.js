@@ -149,8 +149,6 @@ exports.get = function(req) {
 		searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
 		searchDate = searchDate.replace(/['\[\]]/g, ''); // Safeguard against ['xx'] since data path might need it on special characters paths
 
-		log.info(query);
-
 		// Fetch our feed items!
 		var result = libs.content.query({
 			start: 0,
@@ -269,8 +267,6 @@ exports.get = function(req) {
 			feed: rssFeed,
 			items: feedItems
 		};
-
-		log.info(JSON.stringify(params, null, 4));
 
 		var body = "";
 		try {
