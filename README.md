@@ -23,7 +23,7 @@ After installing the app on your XP server, this is how you set it up to use it.
 2. Create a new Page Template in Content Studio
 3. Select RSS page controller for the new template
 4. Select "RSS feed" content type in "Supports" field for the new template
-5. Create a new content of type RSS
+5. Create a new content of type "RSS Feed"
 6. Configure this content to map the content type you want to fetch
 7. Done
 
