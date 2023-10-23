@@ -230,7 +230,7 @@ function renderXml(params) {
 	}
 
 	return {
-		contentType: 'application/xml',
+		contentType: 'text/xml',
 		body: body
 	};
 }
