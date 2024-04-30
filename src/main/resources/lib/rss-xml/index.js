@@ -45,7 +45,8 @@ function getParams(site, content) {
 		date: commaStringToArray(content.data.mapDate) || ['publish.from', 'data.publishDate', 'createdTime'],
 		body: commaStringToArray(content.data.mapBody) || ['data.body', 'data.html', 'data.text'],
 		categories: commaStringToArray(content.data.mapCategories) || ['data.category', 'data.categories', 'data.tags'],
-		timeZone: content.data.timezone || "Etc/UCT"
+		timeZone: content.data.timezone || "Etc/UCT",
+		thumbnailScale: content.data.mapThumbnailScale || "block(480,270)"
 	};
 
 	// Setup for path filtering
@@ -179,7 +180,7 @@ function getParams(site, content) {
 					size: thumbnailAttachment.size,
 					url: libs.portal.imageUrl({
 						id: itemData.thumbnailId,
-						scale: "block(480,270)",
+						scale: settings.thumbnailScale,
 						type: "absolute"
 					})
 				};

@@ -41,6 +41,11 @@
           <help-text>Default mapping: data.thumbnail, data.picture, data.photo</help-text>
           <occurrences minimum="0" maximum="1"/>
         </input>
+        <input type="TextLine" name="mapThumbnailScale">
+          <label>Thumbnail scaling - If empty it defaults to "block(480,270)"</label>
+          <help-text>Choose scaling for the thumbnail. E.g "wide-1600-900", "block-800-600"</help-text>
+          <occurrences minimum="0" maximum="1"/>
+        </input>
         <input type="TextLine" name="mapSummary">
           <label>Description/excerpt</label>
           <help-text>Default mapping: data.preface, data.intro, data.description, data.summary</help-text>
