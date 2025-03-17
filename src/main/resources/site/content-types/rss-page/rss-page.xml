@@ -26,6 +26,16 @@
            <label>Paths to exclude</label>
            <occurrences minimum="0" maximum="0"/>
         </input>
+        <input type="CustomSelector" name="types">
+          <label i18n="common.type">Type</label>
+          <help-text i18n="mixin.tags.type.helpText">Brukes til å filtrere på fag på listesidene</help-text>
+          <occurrences minimum="0" maximum="0"/>
+          <config>
+            <service>no.fiskeridir:select-tags</service>
+            <param value="tagSet">type</param>
+            <param value="count">300</param>
+          </config>
+        </input>
       </items>
     </field-set>
     <field-set name="mappings">

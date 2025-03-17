@@ -71,7 +71,13 @@ function getParams(site, content) {
 			query += ' AND _path NOT LIKE "' + contentRoot + content.data.exclude[i] + '/*"';
 		}
 	}
-
+	// Filter on tags
+	if(content.data.types) {
+		var tags = libs.util.data.forceArray(content.data.types)
+		for (var i = 0; i< tags.length; i++){
+			query += ' AND data.types = "' + tags[i] + '"'
+		}
+	}
 	// Sort by the date field the app is set up to use
 	var searchDate = content.data.mapDate || 'publish.from';
 	searchDate = searchDate.replace("[", ".["); // Add dot since we will remove special characters later
