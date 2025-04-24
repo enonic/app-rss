@@ -10,10 +10,10 @@
           <label>ContentType to use</label>
           <occurrences minimum="1" maximum="1"/>
         </input>
-		  <input type="Long" name="counter">
-		    <label>Number of items</label>
-		    <default>20</default>
-		  </input>
+        <input type="Long" name="counter">
+          <label>Number of items</label>
+          <default>20</default>
+        </input>
         <input type="TextLine" name="language">
            <label>Language (en-US is default)</label>
            <occurrences minimum="0" maximum="1"/>

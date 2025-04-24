@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content-type>
+  <display-name>RSS feed - multi content type</display-name>
+  <super-type>base:structured</super-type>
+    <form>
+        <field-set name="settings">
+            <label>Settings</label>
+            <items>
+                <input type="Long" name="counter">
+                    <label>Number of items</label>
+                    <default>20</default>
+                </input>
+                <input type="TextLine" name="language">
+                    <label>Language (en-US is default)</label>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input type="TextLine" name="include">
+                    <label>Paths to include</label>
+                    <occurrences minimum="0" maximum="0"/>
+                </input>
+                <input type="TextLine" name="exclude">
+                    <label>Paths to exclude</label>
+                    <occurrences minimum="0" maximum="0"/>
+                </input>
+                <input type="CustomSelector" name="types">
+                    <label i18n="common.type">Type</label>
+                    <help-text i18n="mixin.tags.type.helpText">Brukes til å filtrere på fag på listesidene</help-text>
+                    <occurrences minimum="0" maximum="0"/>
+                    <config>
+                        <service>no.fiskeridir:select-tags</service>
+                        <param value="tagSet">type</param>
+                        <param value="count">300</param>
+                    </config>
+                </input>
+            </items>
+        </field-set>
+
+        <item-set name="mappings">
+            <label>Field mappings</label>
+            <occurrences minimum="1" maximum="0"/>
+            <items>
+                <input type="ContentTypeFilter" name="contenttype">
+                    <label>ContentType to use</label>
+                    <occurrences minimum="1" maximum="1"/>
+                </input>
+                <input type="TextLine" name="mapTitle">
+                    <label>Title</label>
+                    <help-text>Default mapping: data.title, displayName</help-text>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input type="TextLine" name="mapThumbnail">
+                    <label>Thumbnail</label>
+                    <help-text>Default mapping: data.thumbnail, data.picture, data.photo</help-text>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input type="TextLine" name="mapThumbnailScale">
+                    <label>Thumbnail scaling</label>
+                    <help-text>E.g "wide(1600,900)", "block(800,600)". Default: block(480,270)</help-text>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input type="TextLine" name="mapSummary">
+                    <label>Description/excerpt</label>
+                    <help-text>Default mapping: data.preface, data.intro, data.description, data.summary</help-text>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input type="TextLine" name="mapAuthor">
+                    <label>Author</label>
+                    <help-text>Default mapping: data.author, content creator displayName</help-text>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input type="TextLine" name="mapCategories">
+                    <label>Categories</label>
+                    <help-text>Default mapping: data.category, data.categories, data.tags</help-text>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+                <input type="TextLine" name="mapDate">
+                    <label>Publish date</label>
+                    <help-text>Default mapping: publish.from, data.publishDate, createdTime</help-text>
+                    <occurrences minimum="0" maximum="1"/>
+                </input>
+            </items>
+        </item-set>
+    </form>
+</content-type>

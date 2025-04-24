@@ -2,10 +2,11 @@ var libs = {
 	content: require('/lib/xp/content'),
 	portal: require('/lib/xp/portal'),
 	auth: require('/lib/xp/auth'),
-    xslt: require('/lib/xslt'),
-    util: require('/lib/util'),
-    thymeleaf: require('/lib/thymeleaf'),
-	moment: require("/lib/moment-timezone")
+	xslt: require('/lib/xslt'),
+	util: require('/lib/util'),
+	thymeleaf: require('/lib/thymeleaf'),
+	moment: require("/lib/moment-timezone"),
+	rssMulti: require("rss-multi-contenttype")
 };
 
 function render(site, content) {
@@ -18,6 +19,12 @@ function renderXmlOnly(site, content) {
 	const params = getParams(site, content);
 
 	return !isParamsValid(params) ? renderEmptyXml() : renderXml(params);
+}
+
+function renderMultiContentType(site, content){
+	const params = libs.rssMulti.getParamsFromMultiContentType(site, content);
+
+	return !isParamsValid(params) ? renderInvalidContentWarning() : renderXml(params);
 }
 
 function getParams(site, content) {
@@ -90,7 +97,7 @@ function getParams(site, content) {
 		query: query,
 		sort: searchDate + ' DESC, createdTime DESC',
 		contentTypes: [
-			content.data.contenttype // NOTE TO SELF: Don't even think about making RSS support multiple content types, the field mapping would be insane!
+			content.data.contenttype
 		]
 	});
 	var posts = result.hits;
@@ -203,7 +210,7 @@ function getParams(site, content) {
 	};
 }
 
-module.exports = { render, renderXmlOnly };
+module.exports = { render, renderXmlOnly, renderMultiContentType };
 
 // Helper functions
 
