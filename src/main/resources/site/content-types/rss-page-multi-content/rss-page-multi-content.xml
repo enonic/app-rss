@@ -37,9 +37,12 @@
                     <label i18n="common.status">Status</label>
                     <occurrences minimum="0" maximum="0" />
                     <config>
-                        <option value="upcoming">Kommende</option>
-                        <option value="current">Gjeldende</option>
-                        <option value="expired">Utgått</option>
+                        <option value="1">Kommende</option>
+                        <option value="2">Gjeldende</option>
+                        <option value="3">Utgått</option>
+                        <option value="upcoming">Kommende (gammel)</option>
+                        <option value="current">Gjeldende (gammel)</option>
+                        <option value="expired">Utgått (gammel)</option>
                         <option value="kommende">Kommende (gammel)</option>
                         <option value="gjeldende">Gjeldende (gammel)</option>
                         <option value="utgått">Utgått (gammel)</option>

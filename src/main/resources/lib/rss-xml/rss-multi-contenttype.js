@@ -36,7 +36,8 @@ exports.getParamsFromMultiContentType = function(site, content){
 
   const rssContent = queryContent(site, content)
   const simpleRssContent = util.data.forceArray(rssContent.hits).map((hit) => {
-    return getSimpleRssItem(contentTypeMappings[hit.type], hit)
+    const oldold = getSimpleRssItem(contentTypeMappings[hit.type], hit)
+    return oldold
   })
 
   const lastBuild = new Date(Math.max.apply(null, simpleRssContent.map((rssContent) => {
@@ -78,7 +79,7 @@ function getSimpleRssItem(settings, content){
   return {
     title: json.findValueInJson(content, settings.title),
     summary: rawSummary ? string.removeTags(rawSummary + '') : "",
-    date: json.findValueInJson(content, settings.date),
+    date: "",//json.findValueInJson(content, settings.date),
     body: json.findValueInJson(content, settings.body),
     authorName,
     thumbnail,

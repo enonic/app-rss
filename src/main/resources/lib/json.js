@@ -1,30 +1,27 @@
-
 exports.findValueInJson = function(json, paths) {
-  var value = null;
-  var pathLength = paths.length;
-  var jsonPath = "";
 
-  for (var i = 0; i < pathLength; i++) {
-    if ( paths[i] ) {
-      jsonPath = 'json.' + paths[i] + '';
-      try {
-        if ( eval(jsonPath) ) {
-          value = eval(jsonPath);
-          if (typeof value === "string") {
-            if (value.trim() === "")
-              value = null; // Reset value if empty string (skip empties)
-            else
-              return value; // Expect the first property in the string is the most important one to use
-          } else if(Array.isArray(value)){
-            return value;
-          } else {
-            return null;
-          }
+  const res = paths.reduce((acc, cur) => {
+    const jpBits = cur.split(',').filter((bit) => bit !== "" && bit !== undefined)
+    const valuesFromJson = jpBits.map((bit) => {
+      const sanitizedBit = bit.trim()
+      const jsonBit = `json.${sanitizedBit}`;
+      if(eval(jsonBit)){
+        const value = eval(jsonBit);
+        if (typeof value === "string") {
+          return value
+        } else if(Array.isArray(value)){
+          return value.join(" ");
         }
-      } catch (e) {
-        log.error((e.cause ? e.cause.message : e.message));
       }
+    }).filter((bit) => bit !== "" && bit !== null && bit !== "null")
+
+    if(valuesFromJson.length > 0) {
+      const ccc = valuesFromJson.join(" ")
+      if(ccc !== "") acc.push(ccc)
     }
-  }
-  return value;
+
+    return acc
+  }, [])
+
+  return res.length > 0 ? res.join(" ") : undefined
 }

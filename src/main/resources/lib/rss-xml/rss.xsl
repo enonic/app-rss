@@ -14,19 +14,17 @@
   <xsl:template match="/">
     <rss version="2.0">
       <channel>
-        <title><xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text>
-		  		<xsl:value-of select="/root/feed/title"/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text></title>
+        <title><xsl:value-of select="/root/feed/title"/></title>
         <atom:link href="{/root/feed/url}" rel="self" type="application/rss+xml"/>
         <link><xsl:value-of select="/root/feed/url"/></link>
-        <description><xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text>
-		  		<xsl:value-of select="/root/feed/description"/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text></description>
+        <description><xsl:value-of select="/root/feed/description"/></description>
         <lastBuildDate><xsl:value-of select="/root/feed/lastBuild"/></lastBuildDate>
         <language><xsl:value-of select="/root/feed/language"/></language>
         <xsl:if test="/root/feed/updatePeriod and /root/feed/updateFrequency">
           <sy:updatePeriod><xsl:value-of select="/root/feed/updatePeriod"/></sy:updatePeriod>
           <sy:updateFrequency><xsl:value-of select="/root/feed/updateFrequency"/></sy:updateFrequency>
         </xsl:if>
-        <generator>Enonic XP - RSS app</generator>
+        <generator>Fiskeridir - RSS app</generator>
 
         <xsl:apply-templates select="/root/items/item"/>
       </channel>
@@ -35,13 +33,8 @@
 
   <xsl:template match="items/item">
     <item>
-      <title>
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="title"/><xsl:text
-              disable-output-escaping="yes"> ]]&gt;</xsl:text>
-      </title>
-      <link>
-        <xsl:value-of select="link"/>
-      </link>
+      <title><xsl:value-of select="title"/></title>
+      <link><xsl:value-of select="link"/></link>
 
       <xsl:if test="thumbnail">
         <xsl:text disable-output-escaping="yes">&lt;enclosure length="</xsl:text>
@@ -56,16 +49,8 @@
         <xsl:value-of select="publishDate"/>
       </pubDate>
 
-      <xsl:if test="authorName">
-        <dc:creator><xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text>
-		  		<xsl:value-of select="authorName"/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text>
-        </dc:creator>
-      </xsl:if>
-
       <xsl:for-each select="categories/item">
-        <category>
-          <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="."/><xsl:text disable-output-escaping="yes"> ]]&gt;</xsl:text>
-        </category>
+        <category><xsl:value-of select="."/></category>
       </xsl:for-each>
 
       <guid isPermaLink="false">
@@ -73,15 +58,9 @@
       </guid>
 
       <description>
-        <xsl:text disable-output-escaping="yes">&lt;![CDATA[ </xsl:text><xsl:value-of select="summary"/><xsl:text
-              disable-output-escaping="yes"> ]]&gt;</xsl:text>
+        <xsl:value-of select="summary"/>
       </description>
-      <!--
-            <content:encoded>
-              <xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text><xsl:value-of select="data/post" disable-output-escaping="yes"/><xsl:text
-                disable-output-escaping="yes">]]&gt;</xsl:text>
-            </content:encoded>
-      -->
+
     </item>
   </xsl:template>
 

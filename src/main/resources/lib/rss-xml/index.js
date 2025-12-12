@@ -23,7 +23,6 @@ function renderXmlOnly(site, content) {
 
 function renderMultiContentType(site, content){
 	const params = libs.rssMulti.getParamsFromMultiContentType(site, content);
-
 	return !isParamsValid(params) ? renderInvalidContentWarning() : renderXml(params);
 }
 
@@ -238,7 +237,6 @@ function renderEmptyXml() {
 
 function renderXml(params) {
 	var body = "";
-
 	try {
 		body = libs.xslt.render(resolve('rss.xsl'), params);
 	} catch (e) {
