@@ -1,0 +1,25 @@
+kind: "CMS"
+form:
+  - type: "ComboBox"
+    name: "updatePeriod"
+    label: "BETA - NOT USED: Default SY Update period"
+    occurrences:
+      min: 0
+      max: 1
+    options:
+      - value: "hourly"
+        label: "Hourly"
+      - value: "daily"
+        label: "Daily"
+      - value: "weekly"
+        label: "Weekly"
+      - value: "monthly"
+        label: "Monthly"
+      - value: "yearly"
+        label: "Yearly"
+  - type: "TextLine"
+    name: "updateFrequency"
+    label: "BETA - NOT USED: Default SY Update frequency"
+    occurrences:
+      min: 0
+      max: 1

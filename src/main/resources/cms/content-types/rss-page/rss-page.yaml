@@ -1,0 +1,131 @@
+kind: "ContentType"
+superType: "base:structured"
+title: "RSS feed"
+form:
+  - type: "FieldSet"
+    label: "Settings"
+    items:
+      - type: "ContentTypeFilter"
+        name: "contenttype"
+        label: "ContentType to use"
+        occurrences:
+          min: 1
+          max: 1
+      - type: "Long"
+        name: "counter"
+        label: "Number of items"
+        occurrences:
+          min: 0
+          max: 1
+        default: 20
+      - type: "TextLine"
+        name: "language"
+        label: "Language (en-US is default)"
+        occurrences:
+          min: 0
+          max: 1
+      - type: "TextLine"
+        name: "include"
+        label: "Paths to include"
+        occurrences:
+          min: 0
+          max: 0
+      - type: "TextLine"
+        name: "exclude"
+        label: "Paths to exclude"
+        occurrences:
+          min: 0
+          max: 0
+  - type: "FieldSet"
+    label: "Field mappings"
+    items:
+      - type: "TextLine"
+        name: "mapTitle"
+        label: "Title"
+        helpText: "Default mapping: data.title, displayName"
+        occurrences:
+          min: 0
+          max: 1
+      - type: "TextLine"
+        name: "mapThumbnail"
+        label: "Thumbnail"
+        helpText: "Default mapping: data.thumbnail, data.picture, data.photo"
+        occurrences:
+          min: 0
+          max: 1
+      - type: "TextLine"
+        name: "mapThumbnailScale"
+        label: "Thumbnail scaling"
+        helpText: "E.g \"wide(1600,900)\", \"block(800,600)\". Default: block(480,270)"
+        occurrences:
+          min: 0
+          max: 1
+      - type: "TextLine"
+        name: "mapSummary"
+        label: "Description/excerpt"
+        helpText: "Default mapping: data.preface, data.intro, data.description, data.summary"
+        occurrences:
+          min: 0
+          max: 1
+      - type: "TextLine"
+        name: "mapAuthor"
+        label: "Author"
+        helpText: "Default mapping: data.author, content creator displayName"
+        occurrences:
+          min: 0
+          max: 1
+      - type: "TextLine"
+        name: "mapCategories"
+        label: "Categories"
+        helpText: "Default mapping: data.category, data.categories, data.tags"
+        occurrences:
+          min: 0
+          max: 1
+      - type: "TextLine"
+        name: "mapDate"
+        label: "Publish date"
+        helpText: "Default mapping: publish.from, data.publishDate, createdTime"
+        occurrences:
+          min: 0
+          max: 1
+      - type: "TextLine"
+        name: "timezone"
+        label: "BETA - WILL BE REMOVED: Feed Time Zone"
+        helpText: "Write like so '+01:00' or as location string. For a complete list\
+          \ of time zones, see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+        occurrences:
+          min: 0
+          max: 1
+      - type: "TextLine"
+        name: "mapBody"
+        label: "BETA - NOT USED: Full body"
+        helpText: "Default mapping: data.body, data.html, data.text"
+        occurrences:
+          min: 0
+          max: 1
+  - type: "FieldSet"
+    label: "RSS customization"
+    items:
+      - type: "ComboBox"
+        name: "updatePeriod"
+        label: "BETA - NOT USED: SY Update period"
+        occurrences:
+          min: 0
+          max: 1
+        options:
+          - value: "hourly"
+            label: "Hourly"
+          - value: "daily"
+            label: "Daily"
+          - value: "weekly"
+            label: "Weekly"
+          - value: "monthly"
+            label: "Monthly"
+          - value: "yearly"
+            label: "Yearly"
+      - type: "TextLine"
+        name: "updateFrequency"
+        label: "BETA - NOT USED: SY Update frequency"
+        occurrences:
+          min: 0
+          max: 1

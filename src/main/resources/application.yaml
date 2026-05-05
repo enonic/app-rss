@@ -1,0 +1,5 @@
+kind: "Application"
+title: "RSS feeds"
+description: "Easily create RSS feeds on your website"
+vendorName: "Enonic AS"
+vendorUrl: "https://enonic.com"

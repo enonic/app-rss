@@ -1,0 +1,9 @@
+[versions]
+thymeleaf = "2.1.1"
+util = "3.1.1"
+xslt = "2.1.1"
+
+[libraries]
+lib-thymeleaf = { module = "com.enonic.lib:lib-thymeleaf", version.ref = "thymeleaf" }
+lib-util = { module = "com.enonic.lib:lib-util", version.ref = "util" }
+lib-xslt = { module = "com.enonic.lib:lib-xslt", version.ref = "xslt" }
