@@ -1,9 +1,7 @@
 [versions]
 thymeleaf = "3.0.0-SNAPSHOT"
-util = "4.0.0-SNAPSHOT"
 xslt = "3.0.0-SNAPSHOT"
 
 [libraries]
 lib-thymeleaf = { module = "com.enonic.lib:lib-thymeleaf", version.ref = "thymeleaf" }
-lib-util = { module = "com.enonic.lib:lib-util", version.ref = "util" }
 lib-xslt = { module = "com.enonic.lib:lib-xslt", version.ref = "xslt" }
