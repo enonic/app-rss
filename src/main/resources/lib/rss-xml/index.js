@@ -237,11 +237,9 @@ function renderXml(params) {
 
 function commaStringToArray(str) {
 	if ( !str || str == '' || str == null) return null;
-	var commas = str || '';
-	var arr = commas.split(',');
-	arr = (Array.isArray(str) ? str : [str]); // Make sure we always work with an array
+	var arr = Array.isArray(str) ? str : str.split(','); // Make sure we always work with an array
 	if (arr) {
-		arr.map(function(s) { return s.trim() });
+		arr = arr.map(function(s) { return s.trim() });
 	}
 	//log.info('%s', JSON.stringify(arr, null, 4));
 	return arr;
