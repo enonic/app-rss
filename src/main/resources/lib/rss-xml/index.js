@@ -3,7 +3,6 @@ var libs = {
 	portal: require('/lib/xp/portal'),
 	auth: require('/lib/xp/auth'),
     xslt: require('/lib/xslt'),
-    util: require('/lib/util'),
     thymeleaf: require('/lib/thymeleaf'),
 	moment: require("/lib/moment-timezone")
 };
@@ -56,7 +55,7 @@ function getParams(site, content) {
 
 	// Content paths to include
 	if (content.data.include) {
-		content.data.include = libs.util.data.forceArray(content.data.include);
+		content.data.include = (Array.isArray(content.data.include) ? content.data.include : [content.data.include]);
 		var includeLength = content.data.include.length;
 		for (var i = 0; i < includeLength; i++) {
 			query += (i == 0) ? ' AND' : ' OR';
@@ -65,7 +64,7 @@ function getParams(site, content) {
 	}
 	// Content paths to exclude
 	if (content.data.exclude) {
-		content.data.exclude = libs.util.data.forceArray(content.data.exclude);
+		content.data.exclude = (Array.isArray(content.data.exclude) ? content.data.exclude : [content.data.exclude]);
 		var excludeLength = content.data.exclude.length;
 		for (var i = 0; i < excludeLength; i++) {
 			query += ' AND _path NOT LIKE "' + contentRoot + content.data.exclude[i] + '/*"';
@@ -130,7 +129,7 @@ function getParams(site, content) {
 
 		// Category handling
 		feedItem.categories = [];
-		var tmpCategories = libs.util.data.forceArray(itemData.categories);
+		var tmpCategories = (Array.isArray(itemData.categories) ? itemData.categories : [itemData.categories]);
 
 		if (JSON.stringify(tmpCategories) != "[null]") {
 			tmpCategories.forEach( function(category) {
@@ -240,11 +239,11 @@ function commaStringToArray(str) {
 	if ( !str || str == '' || str == null) return null;
 	var commas = str || '';
 	var arr = commas.split(',');
-	arr = libs.util.data.forceArray(str); // Make sure we always work with an array
+	arr = (Array.isArray(str) ? str : [str]); // Make sure we always work with an array
 	if (arr) {
 		arr.map(function(s) { return s.trim() });
 	}
-	//libs.util.log(arr);
+	//log.info('%s', JSON.stringify(arr, null, 4));
 	return arr;
 }
 
