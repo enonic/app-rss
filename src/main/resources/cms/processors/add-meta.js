@@ -1,8 +1,7 @@
 var libs = {
 	portal: require('/lib/xp/portal'),
 	content: require('/lib/xp/content'),
-    thymeleaf: require('/lib/thymeleaf'),
-    util: require('/lib/util')
+    thymeleaf: require('/lib/thymeleaf')
 };
 
 var conf = {
@@ -29,7 +28,7 @@ exports.responseProcessor = function (req, res) {
 	var metadata = libs.thymeleaf.render(conf.view, params);
 
 	// Add these to the site html head (can be picked up by browsers and other readers)
-	res.pageContributions.headEnd = libs.util.data.forceArray(res.pageContributions.headEnd);
+	res.pageContributions.headEnd = (Array.isArray(res.pageContributions.headEnd) ? res.pageContributions.headEnd : [res.pageContributions.headEnd]);
 	res.pageContributions.headEnd.push(metadata);
 
 	if (req.params.debug === 'true') {
