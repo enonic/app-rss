@@ -56,6 +56,7 @@ function getParams(site, content) {
 	// Content paths to include
 	if (content.data.include) {
 		content.data.include = (Array.isArray(content.data.include) ? content.data.include : [content.data.include]);
+		content.data.include = content.data.include.map(function (p) { return String(p).trim() }).filter(Boolean);
 		var includeLength = content.data.include.length;
 		for (var i = 0; i < includeLength; i++) {
 			query += (i == 0) ? ' AND' : ' OR';
@@ -65,6 +66,7 @@ function getParams(site, content) {
 	// Content paths to exclude
 	if (content.data.exclude) {
 		content.data.exclude = (Array.isArray(content.data.exclude) ? content.data.exclude : [content.data.exclude]);
+		content.data.exclude = content.data.exclude.map(function (p) { return String(p).trim() }).filter(Boolean);
 		var excludeLength = content.data.exclude.length;
 		for (var i = 0; i < excludeLength; i++) {
 			query += ' AND _path NOT LIKE "' + contentRoot + content.data.exclude[i] + '/*"';
