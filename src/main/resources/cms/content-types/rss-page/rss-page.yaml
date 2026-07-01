@@ -24,35 +24,40 @@ form:
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
       - type: "TextLine"
         name: "include"
         label: "Paths to include"
         occurrences:
           min: 0
           max: 0
+        regexp: "\\S+"
       - type: "TextLine"
         name: "exclude"
         label: "Paths to exclude"
         occurrences:
           min: 0
           max: 0
+        regexp: "\\S+"
   - type: "FieldSet"
     label: "Field mappings"
     items:
       - type: "TextLine"
         name: "mapTitle"
         label: "Title"
-        helpText: "Default mapping: data.title, displayName"
+        helpText: "Default mapping: data.title, displayName. Comma-separated, no whitespace."
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
       - type: "TextLine"
         name: "mapThumbnail"
         label: "Thumbnail"
-        helpText: "Default mapping: data.thumbnail, data.picture, data.photo"
+        helpText: "Default mapping: data.thumbnail, data.picture, data.photo. Comma-separated, no whitespace."
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
       - type: "TextLine"
         name: "mapThumbnailScale"
         label: "Thumbnail scaling"
@@ -60,34 +65,39 @@ form:
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
       - type: "TextLine"
         name: "mapSummary"
         label: "Description/excerpt"
-        helpText: "Default mapping: data.preface, data.intro, data.description, data.summary"
+        helpText: "Default mapping: data.preface, data.intro, data.description, data.summary. Comma-separated, no whitespace."
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
       - type: "TextLine"
         name: "mapAuthor"
         label: "Author"
-        helpText: "Default mapping: data.author, content creator displayName"
+        helpText: "Default mapping: data.author, content creator displayName. Comma-separated, no whitespace."
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
       - type: "TextLine"
         name: "mapCategories"
         label: "Categories"
-        helpText: "Default mapping: data.category, data.categories, data.tags"
+        helpText: "Default mapping: data.category, data.categories, data.tags. Comma-separated, no whitespace."
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
       - type: "TextLine"
         name: "mapDate"
         label: "Publish date"
-        helpText: "Default mapping: publish.from, data.publishDate, createdTime"
+        helpText: "Default mapping: publish.from, data.publishDate, createdTime. Comma-separated, no whitespace."
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
       - type: "TextLine"
         name: "timezone"
         label: "BETA - WILL BE REMOVED: Feed Time Zone"
@@ -96,13 +106,15 @@ form:
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
       - type: "TextLine"
         name: "mapBody"
         label: "BETA - NOT USED: Full body"
-        helpText: "Default mapping: data.body, data.html, data.text"
+        helpText: "Default mapping: data.body, data.html, data.text. Comma-separated, no whitespace."
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
   - type: "FieldSet"
     label: "RSS customization"
     items:
@@ -129,3 +141,4 @@ form:
         occurrences:
           min: 0
           max: 1
+        regexp: "\\S+"
