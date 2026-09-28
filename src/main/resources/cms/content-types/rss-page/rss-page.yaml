@@ -8,6 +8,7 @@ form:
       - type: "ContentTypeFilter"
         name: "contenttype"
         label: "ContentType to use"
+        context: true
         occurrences:
           min: 1
           max: 1
@@ -90,42 +91,17 @@ form:
           max: 1
       - type: "TextLine"
         name: "timezone"
-        label: "BETA - WILL BE REMOVED: Feed Time Zone"
+        label: "Feed Time Zone"
         helpText: "Write like so '+01:00' or as location string. For a complete list\
-          \ of time zones, see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones"
+          \ of time zones, see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. Default: Etc/UCT"
         occurrences:
           min: 0
           max: 1
       - type: "TextLine"
         name: "mapBody"
-        label: "BETA - NOT USED: Full body"
+        label: "Full body"
         helpText: "Default mapping: data.body, data.html, data.text"
         occurrences:
           min: 0
           max: 1
-  - type: "FieldSet"
-    label: "RSS customization"
-    items:
-      - type: "ComboBox"
-        name: "updatePeriod"
-        label: "BETA - NOT USED: SY Update period"
-        occurrences:
-          min: 0
-          max: 1
-        options:
-          - value: "hourly"
-            label: "Hourly"
-          - value: "daily"
-            label: "Daily"
-          - value: "weekly"
-            label: "Weekly"
-          - value: "monthly"
-            label: "Monthly"
-          - value: "yearly"
-            label: "Yearly"
-      - type: "TextLine"
-        name: "updateFrequency"
-        label: "BETA - NOT USED: SY Update frequency"
-        occurrences:
-          min: 0
-          max: 1
+

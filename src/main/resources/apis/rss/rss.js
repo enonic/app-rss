@@ -1,4 +1,3 @@
-const portalLib = require('/lib/xp/portal');
 const contentLib = require('/lib/xp/content');
 const rssXmlLib = require('/lib/rss-xml');
 
@@ -11,14 +10,14 @@ exports.get = function(req) {
         const body = results.hits.map(hit => {
             const site = contentLib.getSite({ key: hit._id });
 
-            return { 
+            return {
                 id: hit._id,
                 path: hit._path.replace(site._path + '/', ''),
                 displayName: hit.displayName,
             }
         });
 
-        return { body, contentType: 'application/json' }; 
+        return { body, contentType: 'application/json' };
     }
 
     if (params.method === 'xml' && params.id) {
@@ -32,6 +31,6 @@ exports.get = function(req) {
         return rssXmlLib.renderXmlOnly(site, content);
     }
 
-    return { status: 400 }; 
+    return { status: 400 };
 };
 

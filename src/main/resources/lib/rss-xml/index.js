@@ -27,7 +27,7 @@ function getParams(site, content) {
 
 	var rssFeed = {}; // General info about the feed
 	rssFeed.title = content.displayName;
-	rssFeed.description = site.data.description;
+	rssFeed.description = site.data.description || '';
 	rssFeed.counter = content.data.counter || 20;
 	rssFeed.language = content.data.language || 'en-US';
 	rssFeed.url = libs.portal.pageUrl({
@@ -149,14 +149,16 @@ function getParams(site, content) {
 				}
 			});
 		}
-		// Reset categories to null if empty
+		// Remove categories if empty
 		if (feedItem.categories.length === 0) {
-			feedItem.categories = null;
+			delete feedItem.categories;
 		}
 
 		feedItem.title = itemData.title || 'Title missing';
 		feedItem.modifiedTime = posts[i].modifiedTime;
-		feedItem.authorName = itemData.authorName;
+		if (itemData.authorName) {
+			feedItem.authorName = itemData.authorName;
+		}
 		feedItem.summary = itemData.summary ? removeTags(itemData.summary + '') : "";
 		feedItem.link = libs.portal.pageUrl({
 			path: posts[i]._path,

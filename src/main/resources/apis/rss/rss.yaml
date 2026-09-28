@@ -1,0 +1,4 @@
+kind: "API"
+title: "RSS API"
+allow:
+  - "role:system.everyone"

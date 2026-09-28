@@ -2,3 +2,5 @@ kind: "Site"
 processors:
   - name: "add-meta"
     order: 80
+apis:
+  - "rss"

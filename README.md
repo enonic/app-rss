@@ -1,7 +1,5 @@
 # RSS app
 
-**Beta software!**
-
 This Enonic XP application adds RSS capabilities to your [Enonic XP](https://github.com/enonic/xp) site. With it you can create RSS feeds (as content) and map them to any Content Type (so you can have multiple feeds).
 
 The App adds:
@@ -58,102 +56,17 @@ We use a waterfall technique on fields to use so that if you use the most common
 **Categories**: [Your setting], `data.category`, `data.categories`, `data.tags`  
 **Publish date**: [Your setting], `data.publishDate`, `createdTime`  
 **Timezone**: [Your setting], `Etc/UTC`  
-**Full body**: BETA - not used!
+**Full body**: [Your setting], `'data.body', 'data.html', 'data.text'`
 
 - Remember to start with `data.` when mapping custom fields from your content type.
 - If your field name contains special characters, like `-`, then wrap the name correctly: `data['My-super-field!']`
 
 **Author** and **category** mapping is "smart". It will handle mapped fields just containing strings (as-is), but it will also handle related content (extracting their displayName value). In addition, the author data will handle being sent a specific user (like with the content `creator` data) if the format is something like `user:system:su` and then extract that user's name.
 
-## Disclaimer
-
-App is still in _BETA_! It works, but some much needed features are needed, as well as increased usability, more testing, and minor issues needs fixing. Use it in production at your own risk.
 
 ## Known issues
 
 - RSS feed's settings for RSS "SY" is not used.
 - App's default settings for RSS "SY" is not used.
-- "Full body" setting is not used, nor displayed in RSS feeds.
 - If no description found for feed item, it will be empty.
 - Setting for TimeZone on each RSS content is temporary, it will be removed/replaced.
-
-## Releases and Compatibility
-
-| Version | XP version   |
-| ------- | ------------ |
-| 1.0.x  | 7.0.0       |
-| 0.13.x  | 6.13.1       |
-| 0.12.0  | 6.9.3 - 6.12 |
-| 0.11.0  | 6.9.3        |
-| 0.10.2  | 6.7.3        |
-| 0.10.1  | 6.5.0        |
-| 0.10.0  | 6.5.0        |
-| 0.9.0   | 6.5.0        |
-
-## Changelog
-
-### Version 1.0.0
-
-- Upgrade to XP7
-
-### Version 0.13.1
-
-- Upgrade dependencies with XSLT library to output error descriptions.
-
-### Version 0.13.0
-
-- Upgrade to XP 6.13.
-- Upgrade to Gradle 4.
-- Styling improvements to invalid content-view.
-
-### Version 0.12.5
-
-- Fixed bug with unsafe use of data on owner (used as fallback in 0.12.x when no author field defined). If you had deleted a user that owned a content, and used this fallback, the RSS feed would crash.
-
-### Version 0.12.4
-
-- _Don't use 0.12.0, 0.12.1, 0.12.2, or 0.12.3!_
-- Fix for date format, was not valid RSS on the timezone part
-- Improved code for date and time handling
-
-### Version 0.12.0
-
-- Added support to timezone (using moment.js). For a complete list of time zones that can be used, see:
-  https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-- Added support for author mapping
-- Added support for category mapping
-- Added support for controlling number of feed items to generate
-- Proper handling of RSS feed title (from content title)
-- **Critical**: Fixed a bug that breaks the RSS feed if the Published Date property is a DateTime with timezone
-- Fix so that controller does not run if content is not a RSS Page (avoids crash)
-- Upgrade to Gradle 3.4
-- **Breaking change**: removed the field "title" from RSS content type (using displayName instead).
-- **Future breaking change**: added a quickfix setting for TimeZone selection on RSS content. This _will_ be removed in next release as there are better ways to solve this.
-
-### Version 0.11.0
-
-- Added support for displaying images for each feed item
-- Refactor XML rendering code to more efficient
-- Multiple minor fixes/adjustments/cleanups/speedups/refactoring
-- Upgrade XP required version to 6.9
-- **Breaking change:** now using the built-in setting from XP for "publish date" in RSS feed. If you still depend on old custom fields you must revise your app settings for this field.
-
-### Version 0.10.2
-
-- Upgrade to 6.7.3
-- Escape title output in XML
-
-### Version 0.10.1
-
-- Finish readme (config instructions)
-- Simplify content type
-- Launch beta
-
-### Version 0.10.0
-
-- Add correct meta tags to all page headers (html head) for each RSS feed on current site
-- Ability to add include-paths in settings of each RSS to filter search even further
-
-### Version 0.9.0
-
-App works, but work in progress. Missing some tweaks and minor functionality, and documentation.
