@@ -1,6 +1,6 @@
 [versions]
 thymeleaf = "3.0.1"
-xslt = "3.0.0"
+xslt = "3.0.1"
 
 [libraries]
 lib-thymeleaf = { module = "com.enonic.lib:lib-thymeleaf", version.ref = "thymeleaf" }
